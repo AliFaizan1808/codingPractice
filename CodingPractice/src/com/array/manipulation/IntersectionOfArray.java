@@ -1,4 +1,4 @@
-package com.string.maipulation;
+package com.array.manipulation;
 
 public class IntersectionOfArray {
 

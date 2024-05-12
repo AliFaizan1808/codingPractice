@@ -10,32 +10,21 @@ public class AnagramString {
 	
 	public static void main(String[] args) {
 		
-        String name = "NADAN";
-        char[] charArray = name.toCharArray();
+        String one = "own";
+        String two = "nowa";
         
-        //way 1 :
-        StringBuilder sb = new StringBuilder(name);
-        StringBuilder reverseSb = sb.reverse();
+        boolean anagramFlag = true;
+        for(int i = 0 ; i< two.length() ; i++) {
+        	if(one.indexOf(two.charAt(i)) < 0) {
+        		anagramFlag = false;
+        	}
+        }
         
-        if(name.equalsIgnoreCase(reverseSb.toString())) {
-        	System.out.println("String is Anagram");
+        if(anagramFlag) {
+        	System.out.println("Both the string are anagram");
         }else {
-        	System.out.println("String is not an Anagram");
+        	System.out.println("Both string are not anagram to each other.");
         }
-       
-        //way 2 :
-        String reverseName = "";
-        for(int i = charArray.length-1 ; i>=0; i--) {
-        	reverseName+=charArray[i];
-        }
-        
-        if(name.equalsIgnoreCase(reverseName)) {
-        	System.out.println("String is Anagram");
-        }else {
-        	System.out.println("String is not an Anagram");
-        }
-        
-        
         
 	}
 

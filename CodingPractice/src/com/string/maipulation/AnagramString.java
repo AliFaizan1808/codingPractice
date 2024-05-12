@@ -11,19 +11,24 @@ public class AnagramString {
 	public static void main(String[] args) {
 		
         String one = "own";
-        String two = "nowa";
+        String two = "now";
         
-        boolean anagramFlag = true;
-        for(int i = 0 ; i< two.length() ; i++) {
-        	if(one.indexOf(two.charAt(i)) < 0) {
-        		anagramFlag = false;
-        	}
-        }
         
-        if(anagramFlag) {
-        	System.out.println("Both the string are anagram");
-        }else {
+        if(one.length() != two.length()) {
         	System.out.println("Both string are not anagram to each other.");
+        }else {
+        	boolean anagramFlag = true;
+            for(int i = 0 ; i< two.length() ; i++) {
+            	if(one.indexOf(two.charAt(i)) < 0) {
+            		anagramFlag = false;
+            	}
+            }
+            
+            if(anagramFlag) {
+            	System.out.println("Both the string are anagram");
+            }else {
+            	System.out.println("Both string are not anagram to each other.");
+            }
         }
         
 	}

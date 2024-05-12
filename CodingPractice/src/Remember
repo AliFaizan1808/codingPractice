@@ -1,0 +1,5 @@
+
+1) str.tocharArray()
+2) str.indexOf('a');
+3) str.lastIndexOf('a')
+4) str.substring(0,1) or str.substring(3)

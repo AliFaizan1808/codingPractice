@@ -1,5 +1,17 @@
 
+String <======================
+
 1) str.tocharArray()
 2) str.indexOf('a');
 3) str.lastIndexOf('a')
 4) str.substring(0,1) or str.substring(3)
+5) str.contains("a")
+
+java - 8 <=====================
+
+1) boxed() - it converts primitive into Object. --Number
+
+
+Collection <=====================
+
+1)  int max = Collections.max(list);

@@ -2,6 +2,7 @@ package com.array.manipulation;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class FindMaxNumberInArray {
 	
@@ -27,6 +28,14 @@ public class FindMaxNumberInArray {
 		.sorted(Collections.reverseOrder())
 		.findFirst().get();
 		System.out.println(maxValue2);
+		
+		//way 4
+	   Integer[] array = {101,1,7,91,12,57, 101};
+	   
+	   List<Integer> list = Arrays.asList(array);
+	   
+	   int max = Collections.max(list);
+	   System.out.println(max);
 		
 	}
 }

@@ -10,6 +10,16 @@ public class FindStringHasUniqueCharacter {
 		
 		String word1 = "Alive swum";
 		
+		String [] splittedWord = word1.split(" ");
+		//this is how to remove all white space.
+		String updatedWord = "";
+		for(String word : splittedWord) {
+			updatedWord = word.trim();
+			updatedWord+=updatedWord;
+		}
+		
+		System.err.println(updatedWord);
+		
 		String word2 = "Faizan ali";
 		
 		//1st way 

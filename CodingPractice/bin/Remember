@@ -15,3 +15,7 @@ java - 8 <=====================
 Collection <=====================
 
 1)  int max = Collections.max(list);
+2)  Collections.reverse(listOfInteger); //it will reverse the order. ---Void
+3)  list.sort(Comparator) --void 
+4)  Collections.sort(list, comparator)  --void  [With or without comparator]
+5)  stream().reversed() --Stream()  [With or without comparator]

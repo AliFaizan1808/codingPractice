@@ -6,3 +6,14 @@
 6) Write a java program to implement selection sort in java.
 8) Write a java program to implement Singleton Design Pattern.
 9) 
+
+
+grouping by , by different way 
+
+Collectors.mapping 
+collectors.toMap..
+
+
+On object do operation. like sorting, convert into map , grouping etc...
+
+compare in two steps [and then compare)

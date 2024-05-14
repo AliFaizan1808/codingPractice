@@ -5,7 +5,7 @@
 5) Write a java program to implement Insertion sort in java.
 6) Write a java program to implement selection sort in java.
 8) Write a java program to implement Singleton Design Pattern.
-9) 
+9) sort the map using Values.
 
 
 grouping by , by different way 
@@ -16,4 +16,4 @@ collectors.toMap..
 
 On object do operation. like sorting, convert into map , grouping etc...
 
-compare in two steps [and then compare)
+comparator in two steps [and then compare again]

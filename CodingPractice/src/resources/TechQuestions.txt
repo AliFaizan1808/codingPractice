@@ -1,0 +1,35 @@
+Certainly, here are some important and potentially tricky interview questions for a candidate with 4 years of experience in Java technology and web development:
+
+**Core Java:**
+
+1. **Explain the differences between `ArrayList` and `LinkedList`. When would you choose one over the other?**
+2. **What is the significance of the `static` keyword in Java? Provide examples of its usage.**
+3. **Discuss the differences between checked and unchecked exceptions. Can you provide examples of each?**
+4. **Explain the concept of multithreading in Java. How would you handle synchronization and potential race conditions?**
+5. **What is the purpose of the `transient` keyword in Java? When would you use it?**
+
+**Java Web Development:**
+
+1. **Describe the MVC (Model-View-Controller) architecture. How does it apply to Java web applications?**
+2. **What is the purpose of the `web.xml` file in a Java web application? How has this changed with the introduction of Servlet 3.0 annotations?**
+3. **Explain the difference between forward and redirect in the context of servlets. When would you choose one over the other?**
+4. **Discuss the advantages and disadvantages of using cookies and sessions for managing user state in a web application.**
+5. **How does JDBC (Java Database Connectivity) work? What are the steps to connect to a database and execute a query?**
+
+**Spring Framework:**
+
+1. **What is inversion of control (IoC) and how does the Spring framework implement it?**
+2. **Explain the difference between Spring MVC and Spring Boot. When would you choose one over the other for a web project?**
+3. **What is a bean in Spring? How can you define beans, and what are the different scopes available?**
+4. **How does Spring support aspect-oriented programming (AOP)? Provide an example of a use case for AOP.**
+5. **Discuss the various ways to configure Spring applications, including XML configuration, Java configuration, and annotations.**
+
+**Web Development Concepts:**
+
+1. **What is CORS (Cross-Origin Resource Sharing)? How can you handle CORS issues in a web application?**
+2. **Explain the purpose of JSON Web Tokens (JWT) and how they can be used for authentication and authorization.**
+3. **What is RESTful API design, and what are the key principles to follow when designing RESTful endpoints?**
+4. **Discuss the importance of security in web applications. How can you prevent common vulnerabilities like SQL injection and cross-site scripting (XSS)?**
+5. **Explain the concept of microservices architecture. What are the benefits and challenges of adopting microservices in web development?**
+
+Remember, the goal of these questions is to gauge the depth of the candidate's knowledge, problem-solving abilities, and practical experience. Feel free to adjust the complexity of the questions based on the candidate's level and the specific requirements of the role.

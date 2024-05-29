@@ -1,0 +1,156 @@
+﻿3 major reason to go for the concurrancy collection.
+
+
+1) many concepts in collection framork E.G -> hashMap,list,set ...All are they not thrad  safe. so there will be some data inconsistantancy problem..
+
+
+2) There are few thread safe concept are avaiable but thr problem is , in porfamonce wise that are not upto the mark..only one single thread will allowed to 
+execute the code..
+Eg -> Vectore (List), HashTable, synchronized Map, 
+synchronizedSet, synchronizedList     
+
+
+3) ConcurrentModificationException -> when one thread or when we tried to chagne the structure/content of any collection concept while iterarting it then it gives 
+the above e xception 
+List <String>fruitList = new ArrayList<String>();   
+fruitList.add("mango");
+ for(String fruit : fruitList) {
+System.out.println(fruit);
+ fruitList.add("banana");}
+
+
+To Overcome above problem we have Concurrent collection
+Concurrent collection are 
+a) Thread safe
+b) performance wise it is faster than traditional thread safe collection framework like (vector , hashtable etc....) bcz it has special locking system.
+c) it wont give ConcurrentModificationException while modifying collection.
+
+
+Various Concurrent collection
+1) ConcurrentHashMap
+2) CopyOnWriteArayList
+3) CopyOnWriteArraySet 
+
+
+
+
+1) ConcurrentHashMap
+
+
+  
+
+all concurrent collection related class and interface prsent inside the java.util.concurrent 
+
+
+Concept of ConcurrentHashMap :->Basically when we talk about thread safety in map we use HashTable  , in case of that  locking of whole  map  gets lock , 
+it means that for any operation only single thread will allow to execute . 
+But, In case of ConcurrentHashMap the locking is a segment type locking  or bucket level locking ...
+that means whole map is not get locked...
+Default concurrancy level is 16 [means it will lock the bucket according to it]
+lets talk about the simple calculation->
+1) default size of map is 16 and default concurrancy level is also 16 then locking will take place per bucket ...
+that means 16 thrad are allowed to perform operation in each bucket.
+2) default size of map is 16 and  concurrancy level is  8 then locking will take place , two lock per bucket ..
+Important point -> For read operation locking will not get done..any thread can read ....
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+2) CopyOnWriteArrayList
+  
+
+
+
+  
+
+
+
+1) at run time  if we are doing write/update operation on the CopyOnWriteArayList then seperate copy gets created and operation gets performed on the
+ copied list then finally it get merged by JVM internally . 
+that means orignal list is untouchable. 
+
+
+2) it s worst choice when we more write operation get done, bcz for each write operation it will create the sperate copy , Ultimately performance will down.
+
+
+3) Important point :-> when we try to remove any obj from the CopyOnArrayList then it will throw the UnsupportedFormatException bcz we already know that 
+at the end JVM will synch the the copy list with orignal list, so it will create the problem there.
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  3) CopyOnWriteArraySet 
+
+
+  
+
+
+
+point to be noted
+internally it implement CopyOnWriteArrayList.
+insertion order is preserved
+No specific methods are present.
+
+
+
+
+VERY IMPORTANT POINT THAT I NEED TO TAKE CARE OF THAT ::-->
+Remeber concurrentModification Exception will thrown during iteration only ...
+if i try to remove or add any element from any collection object while iterating it 
+then it will give me the exception ...
+
+
+Example ->
+
+
+Map<Integer, String > map = new HashMap(); //consider we have value in it...
+for(Map.Entry<Integer,String> entry : map.entrySet()){
+map.remove(entry.getKey()) // here i removed and then Applied break statement below it
+break; //  Now it wont throw any exception here because iteration has been stopped.
+//If I will remove the break statement then it will throw the exception.....
+}
+
+
+
+----------------
+
+
+Yes, you are correct. The CopyOnWriteArraySet internally uses CopyOnWriteArrayList. Here's a detailed explanation of the differences and the relationship between these two classes:
+
+CopyOnWriteArrayList
+Definition: CopyOnWriteArrayList is a thread-safe variant of ArrayList in which all mutative operations (such as add, set, and remove) are implemented by making a fresh copy of the underlying array.
+Usage: It is suitable for scenarios where reads are much more frequent than writes. The overhead of copying the array on each write operation can be significant if write operations are frequent.
+Concurrency: Iterators on CopyOnWriteArrayList will not throw ConcurrentModificationException and reflect the state of the list at the time the iterator was created. Any changes made to the list after the iterator was created are not reflected in the iterator.
+CopyOnWriteArraySet
+Definition: CopyOnWriteArraySet is a thread-safe variant of a Set that internally uses a CopyOnWriteArrayList to store its elements.
+Usage: It is used when you need a thread-safe Set implementation with similar characteristics to CopyOnWriteArrayList – frequent reads and infrequent writes.
+Implementation: Since CopyOnWriteArraySet uses CopyOnWriteArrayList internally, it benefits from the same concurrency guarantees. However, it ensures that duplicates are not allowed (as per the Set contract). Each time an element is added, CopyOnWriteArraySet checks the underlying list to ensure no duplicates are present.
+Differences
+Data Structure:
+
+CopyOnWriteArrayList: Implements the List interface and maintains an ordered collection of elements that can contain duplicates.
+CopyOnWriteArraySet: Implements the Set interface and maintains a collection of unique elements without duplicates.
+Purpose:
+
+CopyOnWriteArrayList: Used when you need a thread-safe list where you can have duplicate elements and order is important.
+CopyOnWriteArraySet: Used when you need a thread-safe set where duplicates are not allowed and order is not important.

@@ -1,0 +1,234 @@
+Spring boot - 2.1.3
+
+Importat points :
+
+1) When we worked with spring MVC - we need the following 1) War file 2) server to deploy war files 3) JVM to run the java code.
+2) When we work with Spring boot - We need the follwoing 1) Jar (in this jar our code + server will be embedded) 2) JVM to run the java code.
+
+=======================================================================================================================================
+
+1) in spring 
+
+for example I have a controller and I have service class 
+so i need to @Autowired service class in controller. and this is the basic flow.
+so instead of @Autowired u can also use construtorr dependency injection. so for that u can remove @autowired from service class
+reference, but make sure to use @AllArgConstructor over controller class. and service class should contain only one single constructor. 
+
+2) Spring boot validation 
+   like 
+   @NotEmpty(message = "value should not be empty")
+
+   @Size(min = 2, max = 4)
+
+
+3) Centralized exceptional exception 
+   @ControllerAdvise 
+   class ErrorHandlor{
+
+   @ExceptionHandler(PublicAPIError.class)
+    public ResponseEntity<Object> handleAPIError(
+
+}
+
+4) @ResponseBody means it will give u the answer in Json format.
+
+5) Use @ControllerAdvice when you're working with traditional MVC controllers and returning views (HTML pages).
+6) Use @RestControllerAdvice when you're building RESTful APIs and returning data in formats like JSON or XML.
+   
+7) 
+RequestEntity<T> is a class provided by Spring Framework that represents an HTTP request entity, including headers, body, and HTTP method. 
+It's typically used when you need to customize the HTTP request, such as adding specific headers, setting a custom HTTP method, or providing a request body.
+Example :-> 
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer myToken");
+        headers.set("Content-Type", "application/json");
+
+        // Create request body
+        MyRequestBody requestBody = new MyRequestBody("data");
+
+        // Create RequestEntity with headers, body, and method
+        RequestEntity<MyRequestBody> requestEntity = new RequestEntity<>(requestBody, headers, HttpMethod.POST, new URI("http://example.com/api/resource"));
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8) @RequestHeader
+In Spring Framework, @RequestHeader is an annotation used to bind a method parameter to a value of a specific HTTP request header. This annotation allows you 
+to access and use the values of HTTP headers that are sent along with the request.
+
+
+You might use @RequestHeader in scenarios where you need to access information from the HTTP request headers, such as:
+
+1. User authentication tokens or session IDs.
+2. Information about the client, such as the user agent or IP address.
+3. Content type or other metadata about the request payload.
+
+
+@GetMapping("/example")
+public String handleRequest(@RequestHeader(value = "User-Agent", required = false) String userAgent) {
+    return "User-Agent: " + (userAgent != null ? userAgent : "Unknown");
+}
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+Configuration management in spring boot.
+
+so important point here. we know that sensitive information we never put in the application properies. that is not recommended. for that we use enironment variable and 
+we read it. or u can use config server also.
+
+Lets see in how many ways , we can read the properties.
+
+1) @value("{xyz.usjd"})  
+  private String property;   -------------> This takes the property from the .property file.
+
+2) Environment varaible.
+   Environment env;
+
+   String value = env.getProperty("property");   ------------> this will read property from env varaibles. 
+
+3) a) In configuration class @EnableConfigurationProperties
+   b) in dto class where we want to match all the properties, use @ConfigurationProperties("prefix"). -----------> This takes the property from the .property file.
+
+
+
+Profiling concept --> basically u can activate which property u need to activate 
+spring.profile.active = prod
+
+So if u notice , if we want env specific property then we need to rebuild and redeploy the apllication. even using profile concept we have to rebuild.
+So we need something so that, Using externailzation technique we can inject the property without rebuilding the Application.
+
+
+so using the environment varaible u dont need to change anything in the code. it will use the environment variable dynamically..
+
+using externalize technique also u have to restart the application. I mean u dont need to build, but u need to restart the application.
+
+and we have to manually nee to inject this . so this also not the good way to inject the property.
+
+So the advance and the best way is the 
+
+ Spring cloud Config server :->
+*...........................* Go to microservice document.
+
+----------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+1) Different type of DI . and which is most preferable DI ?
+https://chatgpt.com/share/1d1f66e3-c15c-4681-82d0-bfccff3a86ed
+https://chatgpt.com/share/ed64c1ac-e9d5-40f1-9da1-7adf6aeeaab9
+
+----------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+@SpringBootApplication :->
+
+This is the main Annotation. this Annotation comprises of Three Annotations.
+
+@Configuration, @EnableAutoConfiguration, and @ComponentScan
+
+What is the @EnableAutoConfiguration ? and what will happen if there is no @EnableAutoConfiguration?
+
+@EnableAutoConfiguration: Automatically configures your Spring application based on the dependencies present on the classpath.(like it will intitlize ApplicationContext bean)
+Convenience: Reduces the need for manual configuration, allowing rapid development.
+Without It: Requires manual configuration of all aspects of your Spring application, leading to more boilerplate code and configuration.
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+Actuators:
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+ How to Use Jetty Instead of Tomcat in Spring-Boot-Starter-Web? 
+
+Remove the existing default tomcat dependency from spring-boot-starter-web and add the spring-boot-starter-jetty dependency:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+1) server.port = 8080
+2) What is the default context path in spring boot?
+   "/" but if we want to change then ::-> server.servlet.context-path=/myapp
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+How to generate a WAR file with Spring Boot? 
+
+1) <packaging>war</packaging>
+
+2) <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+  </dependency>
+
+3)  @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(TribylWebXml.class);
+    }
+
+4) @SpringBootApplication
+public class Springboot2WebappJspApplication extends SpringBootServletInitializer{
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+How to get the list of all the beans in your Spring boot application?
+Spring Boot actuator “/Beans” is used to get the list of all the spring beans in your application
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+Question :->
+1) Spring boot comes with the tomcat server, when we package as jar executable jar then we dont need server to install we can use tomcat
+   but when we deploy our application in ECS or EC2 in AWS then we have to install tomcat there. ? I am getting little confused .
+   
+why we dont use our tomcat embedded in spring boot in AWS....may be we do 
+
+2) Where we have docker installed. how we are creating the images here?
+3) Do we have dockerhub acount also?
+
+4) What is snapshot ?
+5) What is fatjar?
+
+first create jar using mvn -Dskiptests clean install
+mvn spring-boot:run  ---it sees the <build> and we added pulgin spring-boot-maven-pulgin
+
+this u have run using maven 
+
+u can also run spring boot using java command 
+
+java -jar /jarLocation/jarName.jar
+
+
+6) Nginx??
+7) For microservice how many ECS usually people work on.
+
+8) Where is the deployement command in spring boot...--> I mean jenkin tells ECS to deploy, but have we written and comand...

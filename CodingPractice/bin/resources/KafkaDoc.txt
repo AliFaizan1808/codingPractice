@@ -1,0 +1,293 @@
+Kafka basic data :->
+
+https://www.geeksforgeeks.org/topics-partitions-and-offsets-in-apache-kafka/
+#:~:text=Each%20partition%20is%20going%20to,ID%20is%20called%20an%20Offset.
+
+1) the more partitions you have the more throughput can go through your topic
+2) Data in Kafka by default is kept only for a limited amount of time and the 
+   default is one week to ensure it does not run out of disk space. 
+3) Kafka is immutable. That means once the data is written into a partition, 
+   it cannot be changed. So if you write the message number 3 in partition 0
+   you cannot overwrite.
+   
+4) Also if you don’t provide a key to your message, then when you send a message 
+   to a Kafka topic the data is going to be assigned to a random partition
+5) By default KafkaTemplate<Object, Object> is created by Spring Boot 
+   in KafkaAutoConfiguration class.
+6) KafkaStreams enables us to consume from Kafka topics, analyze or transform data, 
+   and potentially, send it to another Kafka topic.
+7) offering a processing latency that is on a millisecond level.
+
+
+Stream --->>>
+
+In general, a Stream can be defined as an unbounded and continuous flow 
+of data packets in real-time. Data packets are generated in the form of 
+key-value pairs and these are automatically transferred from the publisher, 
+there is no need to place a request for the same.
+
+================================================
+why to use @EnableKafka???
+That is because Spring boot provides an auto configuration for Kafka via 
+KafkaAutoConfiguration class (javadoc). When you use @EnableAutoConfiguration 
+or @SpringBootApplication, Spring boot automatically configures Kafka for you.
+
+You can test that by excluding the auto configuration by providing 
+@SpringBootApplication(exclude={KafkaAutoConfiguration.class}), 
+and Spring boot would not automatically configure Kafka for you.
+
+If you don't use Spring boot, then you would have to use @EnableKafka 
+to configure Kafka for your Spring app.
+===============================================
+
+
+1)  The KafkaTemplate wraps a producer and provides convenience methods to send data to kafka
+topics. Both asynchronous and synchronous methods are provided, with the async methods returning
+a Future (CompletableFuture).
+
+2) To create kafaTemplate below is the steps
+
+		  @Bean
+		public ProducerFactory<Integer, String> producerFactory() {
+		 return new DefaultKafkaProducerFactory<>(producerConfigs());
+		}
+		@Bean
+		public Map<String, Object> producerConfigs() {
+		 Map<String, Object> props = new HashMap<>();
+		 props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		 ...
+		 return props;
+		}
+		@Bean
+		public KafkaTemplate<Integer, String> kafkaTemplate() {
+		 return new KafkaTemplate<Integer, String>(producerFactory());
+		}
+		
+
+
+
+
+
+
+
+
+==================================Receiving Messae=============================
+
+1) Messages can be received by configuring.
+
+   a)MessageListenerContainer b) by using the @KafkaListener annotation.
+   c)public interface AcknowledgingMessageListener<K, V> extends MessageListener<K, V> {
+   
+   a) MessageListenerContainer(I)
+      its implementation classes 
+	  • KafkaMessageListenerContainer
+      • ConcurrentMessageListenerContainer
+	  
+	  - The KafkaMessageListenerContainer receives all message from all 
+	  topics/partitions on a single thread. 
+	  - The ConcurrentMessageListenerContainer delegates to 1 or more
+      KafkaMessageListenerContainers to provide multi-threaded consumption
+	  
+	
+
+2) Kafka allocates the partitions based on the group.id property
+
+3) ConcurrentMessageListener Container contains one property called as
+   concurrency 
+   e.g. container.setConcurrency(3) will create 3 KafkaMessageListenerContainer s.
+   
+4) If, say, 6 TopicPartition s are provided and the concurrency is 3; each container will get 2
+partitions. For 5 TopicPartition s, 2 containers will get 2 partitions and the third will get 1. If the
+concurrency is greater than the number of TopicPartitions, the concurrency will be adjusted
+down such that each container will get one partition.
+
+ConsumerConfigs.PARTITION_ASSIGNMENT_STRATEGY_CONFIG
+spring.kafka.consumer.properties.partition.assignment.strategy=org.apache.kafka.clients.consumer.RoundRobinAssignor
+
+
+5) Committing an offset for a partition is the action of saying that the offset has
+   been processed so that Kafka cluster won't send the committed records for the 
+   same partition. Committed offset is important in case of a consumer recovery or 
+   rebalancing (we will learn more about rebalancing in a next tutorial)
+   
+   many types of committin is avaiabe ,...see each example...
+   
+   
+6) if we are using @KafkaListener
+   
+   This mechanism requires a <----- listener container factory  --->, 
+   which is used to configure
+   the underlying ConcurrentMessageListenerContainer: by default, a bean with name
+   kafkaListenerContainerFactory is expected.
+   
+   @Bean
+	public ConsumerFactory<String, String> consumerFactory(){
+		return new DefaultKafkaConsumerFactory<>(configurationDetails.consumerConfigDetails());
+	}
+
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> factory(ConsumerFactory<String, String> consumerFactory){
+		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+		factory.setConsumerFactory(consumerFactory);
+		factory.getContainerProperties();
+		//factory.setMessageConverter(new StringJsonMessageConverter());
+		// factory.setBatchListener(true); //ue list in case of batch...just check 
+		//set the concurrecy 
+		return factory;
+	}
+
+Starting with version 1.1, @KafkaListener methods can be configured to receive 
+the entire batch of consumer records received from the consumer poll. To configure
+ the listener container factory to create batch listeners, set the batchListener
+ property
+ 
+ for exMPLle
+ 
+ @KafkaListener(id = "listMsg", topics = "myTopic", containerFactory = "batchFactory")
+public void listen14(List<Message<?>> list) {
+    ...
+}
+
+or
+
+@KafkaListener(id = "list", topics = "myTopic", containerFactory = "batchFactory")
+public void listen(List<String> list) {
+    ...
+}
+	
+Class level
+
+When using @KafkaListener at the class-level, you specify @KafkaHandler 
+at the method level. 
+When messages are delivered, the converted message payload type is used 
+ to determine which method to call.
+
+@KafkaListener(id = "multi", topics = "myTopic")
+static class MultiListenerBean {
+
+    private final CountDownLatch latch1 = new CountDownLatch(2);
+
+    @KafkaHandler
+    public void listen(String foo) {
+        ...
+    }
+
+    @KafkaHandler
+    public void listen(Integer bar) {
+        ...
+    }
+
+    @KafkaHandler
+    public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) int key) {
+        ...
+    }
+
+}
+
+
+
+Use the errorHandler to provide the bean name of a KafkaListenerErrorHandler implementation. This functional interface has one method:
+
+@FunctionalInterface
+public interface KafkaListenerErrorHandler {
+
+    Object handleError(Message<?> message, ListenerExecutionFailedException exception) throws Exception;
+
+}
+
+there is ne sub interface is also present.
+ConsumerAwareListenerErrorHandler
+
+@Bean
+public ConsumerAwareListenerErrorHandler listen3ErrorHandler() {
+    return (m, e, c) -> {
+        this.listen3Exception = e;
+        MessageHeaders headers = m.getHeaders();
+        c.seek(new org.apache.kafka.common.TopicPartition(
+                headers.get(KafkaHeaders.RECEIVED_TOPIC, String.class),
+                headers.get(KafkaHeaders.RECEIVED_PARTITION_ID, Integer.class)),
+                headers.get(KafkaHeaders.OFFSET, Long.class));
+        return null;
+    };
+}
+
+
+
+
+
+
+//
+
+//Message<EmailEventDto> message = MessageBuilder.withPayload(emailEventDto).setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+
+			future.whenComplete((result, ex) -> {
+				if (ex == null) {
+					// handleSuccess(data);
+				}else {
+					// handleFailure(data, record, ex);
+				}
+
+			});
+			
+			
+////ProducerInterceptor   we can use this also check methods from ProducerInterceptor
+
+			
+	
+	
+
+Just check.....
+
+The API which take in a timestamp as a parameter will store this timestamp 
+in the record. The behavior of the user provided timestamp is stored is
+ dependent on the timestamp type configured on the Kafka topic.
+ If the topic is configured to use CREATE_TIME then the user specified 
+ timestamp will be recorded or generated if not specified. If the topic is 
+ configured to use LOG_APPEND_TIME then the user specified timestamp will be 
+ ignored and broker will add in the local broker time.
+   
+   
+   Just see the 4.1.7 Kerberos
+
+
+ 
+   
+   
+   
+   //Listners
+   
+   
+   	// try to use this ---> ConsumerRecord<String, EmailEventDto> record
+	/*
+	 * @KafkaListener(id = "bar", topicPartitions = { @TopicPartition(topic =
+	 * "topic1", partitions = { "0", "1" }),
+	 * 
+	 * @TopicPartition(topic = "topic2", partitions = { "0", "1" }) }) public void
+	 * listen(ConsumerRecord<?, ?> record) { ... }
+	 */
+	
+	
+	/*
+	 * @KafkaListener(id = "bar", topicPartitions = { @TopicPartition(topic =
+	 * "topic1", partitions = { "0", "1" }),
+	 * 
+	 * @TopicPartition(topic = "topic2", partitions = "0", partitionOffsets
+	 * = @PartitionOffset(partition = "1", initialOffset = "100")) }) public void
+	 * listen(ConsumerRecord<?, ?> record) { ... }
+	 */
+	 
+	 @KafkaListener(id = "qux", topicPattern = "myTopic1")
+	public void listen(@Payload EmailEventDto foo,
+	        @Header(KafkaHeaders.RECEIVED_KEY) Integer key,
+	        @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+	        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+	   
+	}
+   
+ //factory.setMessageConverter(new StringJsonMessageConverter());
+		// factory.setBatchListener(true); //ue list in case of batch...just check 
+		//set the concurrecy 
+
+
+
+

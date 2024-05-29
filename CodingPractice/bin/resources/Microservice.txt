@@ -1,0 +1,35 @@
+
+Basic definatiom of Cloud computing and Clod Native.
+ https://aws.amazon.com/what-is/cloud-native/
+
+
+Configuration management :->
+
+see the spring boot file for more details.
+
+-----------------------------------------------------------------------------------
+
+ Spring cloud Config server :-> 
+
+
+@EnableConfigServer
+@SpringBootApplication
+public class MyClass{
+
+}
+
+
+1) u have to create the specific spring boot project. u need to use spring cloud config server as a dependency from spring initializer.
+2) write some property in application.property. 
+
+There are many ways to store the properties 
+1) use application propertis in class path of the spring config project.
+   like loan-local.properties, loan-prod.properties, loan-qa.properties and so on.
+
+2) You can put this proprties in s3 bucket or any file system.
+
+3) You can use git repository also , where u can put all this properties file.
+
+4) you can save in DB also.
+
+   see image for the properties and some syntax

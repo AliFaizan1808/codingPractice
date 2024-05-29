@@ -1,0 +1,43 @@
+Certainly! Here are some commonly asked interview questions on the Java Collections Framework for candidates with 3 to 4 years of experience:
+
+1. **Explain the Java Collections Framework. What are its core interfaces and classes?**
+
+2. **What is the difference between `List`, `Set`, and `Map` in the Collections Framework? Provide examples of when to use each one.
+
+3. **What is the difference between ArrayList and LinkedList? When would you choose one over the other?**
+
+4. **How does a HashSet ensure uniqueness of elements?**
+
+5. **Explain the difference between HashSet and TreeSet.**
+
+6. **What is the purpose of the `hashCode()` and `equals()` methods in Java collections? Why are they important?**
+
+7. **What is the `Comparable` interface, and how is it used in Java collections?**
+
+8. **What is the `Comparator` interface, and how is it different from `Comparable`?**
+
+9. **Explain the concept of synchronization in the context of collections. When and why would you use synchronized collections?**
+
+10. **What is the difference between an Iterator and a ListIterator? Provide use cases for each.**
+
+11. **What is the difference between fail-fast and fail-safe iterators?**
+
+12. **Explain the purpose and usage of the `Collections` class in Java.**
+
+13. **What is a concurrent collection, and why might you use one in a multi-threaded application? Give examples of concurrent collections.**
+
+14. **How does the `HashMap` internally handle collisions?**
+
+15. **What is the purpose of the `LinkedHashMap` class?**
+
+16. **Explain the concept of a "weak reference" in Java collections.**
+
+17. **What is the difference between `Collections.synchronizedList()` and `CopyOnWriteArrayList`?**
+
+18. **Can you describe the advantages and disadvantages of using the `CopyOnWriteArrayList` class?**
+
+19. **What are the differences between a `HashSet` and a `HashMap` in terms of implementation and usage?**
+
+20. **Explain how you can sort a List of objects using the `Collections.sort()` method and a custom `Comparator`.**
+
+These questions cover various aspects of the Java Collections Framework and its usage. Be prepared to provide clear explanations and practical examples to demonstrate your understanding during your interview.

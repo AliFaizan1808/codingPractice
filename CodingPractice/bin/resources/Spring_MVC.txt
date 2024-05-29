@@ -1,0 +1,313 @@
+
+/* Spring  MVC */
+%%
+
+
+Very good concept of loose coupling and tight coupling -->>>
+
+https://stackoverflow.com/questions/2832017/what-is-the-difference-between-loose-coupling-and-tight-coupling-in-the-object-o
+
+How spring container provide us a loose coupling  ->> Below is the answer 
+https://www.java4s.com/spring/spring-core-module-spring-ioc-tutorial/
+
+
+--------------------------------------------------------------------------------
+response.addHeader("Refresh", "5");
+JSESSIONID --per session
+Which exception is thrown if the servlet is not initialized properly?
+Ans: The Servlet Exception or Unavailable Exception is thrown if the servlet is not initialized properly.
+------------------------------------------------------------------------------------------------------
+-------------------------------------Spring MVC-------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+how Spring MVC works 
+	1)deploye project 
+	2) it will search web.xml
+	3) initialization of dispatcher servlet will Start.
+	4) before complete initialization it will search the file having name xyz-servlet.xml
+	5) initialization completed 
+	6) webApplicationContext [web container will be craeted ]
+	7) if u have a tag named as <context-componant-scan/> then it will scan all based package 
+	8) after scanning if any class contain @Component , @Controller  then bean will be created for that 
+	class
+	9) when url is hit then first it will search url mapping in web.xml and then spring will search 
+	same url in the controller and run appropriate method.
+Note :: if u want your own name for  -servlet then write this
+%%
+	<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/youOwnName-servlet.xml</param-value>
+	</context-param>
+	 
+*---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---*
+
+1) @RequestMapping("/url")- to run method after getting proper url from client.
+2) @ResponseBody- if u r not using Model and view then use this ...this annotation will be responsible 
+to put o/p data into http response body
+Note :: You can also write @RequestMapping("/classLevel")  on class level 
+if u write like this then u have to hit url according to below order 
+ex-  /classLevelUlr/methodLevelUrl
+
+/*
+Very Important point ::->
+1) we use @ResponseBody if we are not using view resolver. - bcz 
+A) what ever the method returns specifically String it considered as view Name .
+B) Spring mvc will take it as a view name at that point we have to provide full qualified name of the 
+view.
+c)if we have not provide qualified name then it will give 404 
+d) giving qualified name is not appropriate and therefore View Resolver comes into existance 
+*/
+
+
+View Resolver - its a technology which will tell the spring where is the view page is located
+and whats its extension .
+total qualified name is like = /WEB-INF/view/Faizan.jsp
+here  /WEB-INF/view = prefix
+.jsp = suffix
+there are multiple way to provide view ex- via tiles.xml, InternalResourceViewResolver class 
+1) for InternalResourceViewResolver 
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<property name = "prefix" value ="/WEB-INF/view"/>
+<property name ="suffix" value=".jsp"/>
+</bean>
+
+*---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---**---*---*
+
+Five steps are iportant to start Spring MVC
+1) write the configuration file (web.xml) -> decalre dispache servlet in <servlet> tag.
+2) create congif file named as -servlet.xml...declare the bean over there.
+3) create the controllers 
+4) create the view page..
+
+/*Important point
+As similar to <context:annotation-config>, <context:component-scan> can recognize and process 
+the dependency injection annotations too. Moreover, <context:component-scan> recognizes bean 
+annotations that <context:annotation-config> doesn't detect.
+*/
+
+
+you can use Model or ModelAndView  for controller 
+ex:->
+@RequestMapping("/Model") or @RequestMapping(path = "/Model", method = RequestMethod.POST)
+public String getModel(Model  ){
+model.addAttribute("key","value");
+return "viewName";
+}
+@RequestMapping("/ModelAndView")
+public String getModel(){
+ModelAndView m = new ModelAndView("viewName");
+//model.setView...
+model.addObject("key","value");
+return "viewName";
+}
+you can write RequestMapping annotaion on above the class leve also then request should need to hit 
+like this 
+/classlevelurl/methodLevelUrl
+******************************************************************************************
+******************************************************************************************
+
+%%
+if we want to get the data from UI to controller we have mainly three ways in controller..
+1) httpRequest.getParamter("name");
+2) @RequestParam("name") String name; or  @RequestParam(name = "name") String name 
+or @RequestParam(value = "name") String name 
+3) @ModelAttribute
+
+A) @RequestParam ::->
+
+	@RequestParam("name") String name; OR ***higly prefered
+	@RequestParam(name = "name") String name  OR
+	@RequestParam(value = "name") String name OR
+	@RequestParam String name *name should same...Not prefer
+
+if we will not get the attribute in request(url + form) then exception will occure..
+to overcome out of this issue we can do like this 
+%%
+ @RequestParam("name", required = false) String name;
+
+if we will not get the value then we will not get exception , we will get null value over 
+there
+
+/*Method parameters annotated with @RequestParam are required by default.
+This means that if the parameter isn’t present in the request, we'll get an error
+*/
+ 
+B) @ModelAttribute %%
+
+	1) we can write @ModelAttribute in argument of method or above the method .
+	2) we can write ModelAttribute in jsp also to take the default input 
+	3) if we are writting @ModelAttribute then no need to add the attribute associated with ModelAttribute
+	in model. we will automatically get the value in model
+	4) if we want repeated data in model then we can use @ModelAttribute at method level.
+	5)The annotation works only if the class is a Controller class (i.e. annotated with @Controller)**-**-*-*--*.
+	6) Before invoking the handler method, Spring invokes all the methods that have @ModelAttribute annotation. 
+	It adds the data returned by these methods to a temporary Map object. The data from this Map would be added to the 
+	final Model after the execution of the handler method.
+	  %% Must read
+	7)https://www.dineshonjava.com/modelattribute-in-spring-mvc/
+	8) AutoBinding  :-> even we can bind our own class parameter also ....see the image that in cell phone.
+	Note and see:-> 		<input type="hidden" id="liveRate" name="liveRate" value="0.0"/> double
+
+
+C) redirect 
+     %%
+	1) we know how to redirect using httpResponse.sendRedirect("recipient.htm"); or(httpReq.contextPath() + "/recipient.htm");
+	2) we have 2nd tech..we can give redirect url in place of view name like this 
+	modelRoot =  new ModelAndView("redirect:"+ "/managetokens.htm");
+	3) also we have RedirectView class we can do like this .**********
+	RedirectView r = new RedirectView();
+	r.setUrl("recipient.htm");
+	
+D)@DateTimeFormat(pattern="dd/mm/yy");
+
+E) BindingResult ->
+    %%
+	it is used to handle the error, it can used to check validation [ any error is present or Not] particular with the    form
+	Yes , if autobinding will fail with using @ModelAttribute then BindingResult result will be helpful.
+	syntax is like :-> 
+	public ModelAndView paymentStep2(HttpServletRequest httpRequest, HttpServletResponse httpResponse, 
+	@ModelAttribute PaymentObjectUI paymentObjectUI, BindingResult result){
+	if(result.hasError()){
+	//DoStuff
+	}
+	}
+	
+F) @PathVariable 
+
+	in js->  url : "rest/getBankDetailsByPaymentNo/"+ countryCode.value+"/"+ curr_code.value+"/"+pCode.value+"",		
+	@GetMapping(value = "/getBankDetailsByPaymentNo/{cntryCode}/{currCode}/{paymentNo}")
+	public @ResponseBody
+	Benificiary getBankDetailsByPaymentNo(@PathVariable String cntryCode,
+	@PathVariable String currCode, @PathVariable String paymentNo,
+	HttpServletRequest request, HttpServletResponse response) {
+	
+	ex-2) http://localhost:8080/shop/order/1001/receipts?date=12-05-2017
+	@RequestMapping(value="/order/{orderId}/receipts", method = RequestMethod.GET) 
+	public List listUsersInvoices( @PathVariable("orderId") int order, @RequestParam(value = "date", required = false) Date dateOrNull){  
+	}
+	The @RequestParam is used to extract query parameters while @PathVariable is used to extract data right from the URI.
+	
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+//Handling Static Resources.   *-*-*-**-*-***/*--
+keep resources folder inside webbApp/WEB-INF/resources/images...
+in dispatcher-servlet.xml we will tell mvc that we have accessing static content like this .
+<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+whenever we use <mvc tag then we need to tell Spring mvc that we are using annotation based mvc ..to tell that we can use.
+// <mvc:annotation-driven />
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+%%
+Exception Handling in Spring MVC*-*-*-*-*-*-*-*-*-*
+1) @ExceptionHandler
+@ExceptionHandler(value= NullPointerException.class)
+@ExceptionHandler({value= NullPointerException.class, Exception.class})
+2) @ControllerAdvice -> it used to handle exceptions in centralized way...
+assume u have many controller and if any exception will occured then following steps will execute.
+1) it will call to the class which is annotated with @ControllerAdvice
+and inside that class  @ExceptionHandler  will be present then it will call the method occording to that.
+
+************************************************************************************************************************************************
+************************************************************************************************************************************************
+
+@InitBinder
+this annotation will work before data binding work perform.
+1) if we want some of the property to be ignored while auto binding then we can use above annotation ,
+see image in mobile phone for more details.
+2) built in Property Editor classes / custom property editor classe -> if u change your format in input boxes and dont want to
+ throw the exception and want to accept then also we can use  above annotation , see proper image for more detail in cell phone
+3) Auto property Editor class-> plz see the image in cell phone
+
+**** by default spring only maps only 255 objects to the java bean.
+
+************************************************************************************************************************************************
+****************************************************************************************************************************************
+%%
+Spring Validation ->
+	1) we need to import 3rd party jars to implement spring mvc validations..that should follow JSR 303/349 specification 
+	we have used hibernate validator library ...
+	2) use @valid before @ModelAttribute to activate all spring mvc validations annotations.
+	Spring will check @Valid annotation and will understand that before binding the value to @ModelAttribute , 
+	it need to go the the class(mentioned next to @ModelAttribute)
+	and check the spring mvc validations annotations..if any exception will occured then it will get bind to BindingResult ..
+	3) @Size(min=3, max=15, message = "please eneter a value in between {min} and {max} charachter")
+	private String name;
+	if we want to give message from property file then we can give like below ..
+	in dispatcher-servlet.xml->
+	<beans:bean
+	class="org.springframework.context.support.ReloadableResourceBundleMessageSource"  **********Need to see
+	id="messageSource" p:basenames="WEB-INF/messages,WEB-INF/application"
+	p:fallbackToSystemLocale="false" />
+	remaining see in image.....
+	4) if name length less than 3 and greater than 15 then exception will occured and stored into BindingResult and will shown to UI
+	5) @Pattern
+	6) @Past
+	7) @Max
+	8) @Future
+	9) @Min
+	
+https://www.geeksforgeeks.org/spring-mvc-validation/
+------------------------------------------------------------------------------------------------------------
+<servlet> //for each request
+	<servlet-name>HelloWorld</servlet-name>
+	<servlet-class>TestServlet</servlet-class>
+	<init-param>
+		<param-name>myprop</param-name>
+		<param-value>value</param-value>
+	</init-param>
+</servlet>
+
+ServletConfig config = getServletConfig();  
+String driver=config.getInitParameter("myprop");  
+<web-app> //per application
+<context-param>
+<param-name>myprop</param-name>
+<param-value>value</param-value>
+</context-param>
+</web-app>
+
+There is only one ServletContext object per web application.
+If any information is shared to many servlet, it is better to provide it from the web.xml file using the <context-param> element.
+The ServletContext object can be used to set, get or remove attribute from the web.xml file.
+public void setAttribute(String name,Object object):sets the given object in the application scope.
+public Object getAttribute(String name):Returns the attribute for the specified name.
+public void removeAttribute(String name):Removes the attribute with the given name from the servlet context.
+
+////////////////////////////////Very Important/////////////////////////////////////////////////////////////////////////////////
+Attribute specific methods of ServletRequest, HttpSession and ServletContext interface
+There are following 4 attribute specific methods. They are as follows:
+	1) public void setAttribute(String name,Object object):sets the given object in the application scope.
+	2) public Object getAttribute(String name):Returns the attribute for the specified name.
+	3) public Enumeration getInitParameterNames():Returns the names of the context's initialization parameters as an Enumeration of String objects.
+	4) public void removeAttribute(String name):Removes the attribute with the given name from the servlet context.
+/////////////////////////////////////////////////////////////////////////////////
+------------------------------------------------------------------------------------------------------------
+<error-page>  
+	<error-code>500</error-code>  
+	<location>/etailer_index.jsp</location>  
+</error-page>  
+<error-page>
+	<exception-type>com.currenciesdirect.gtg.ngop.et.core.exception.SessionExpiredException</exception-type>
+<location>/logout.htm</location> 
+</error-page>
+------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+Filters in servlet->
+The servlet filter is pluggable, i.e. its entry is defined in the web.xml file, if we remove the entry of filter from the web.xml file, filter will be removed automatically and we don't need to change the servlet.
+uses->recording all incoming requests
+logs the IP addresses of the computers from which the requests originate
+input validation etc.
+Like servlet filter have its own API. The javax.servlet package contains the three interfaces of Filter API. 
+1) Filter
+2) FilterChain
+3) FilterConfig
+For creating any filter, you must implement the Filter interface. Filter interface provides the life cycle methods for a filter.
+lifecycle is same as servlet [in place of service it has doFilter(httpRequesr req, HttpResponse resp)
+--------------------
+
+web.xml is also known as the Deployment Descriptor which has definitions of the servlets and their mappings, 
+filters, and lifecycle listeners. It is also used for configuring the ContextLoaderListener. 
+Whenever the application is deployed, a ContextLoaderListener instance is created by Servlet container which leads 
+to a load of WebApplicationContext

@@ -1,0 +1,103 @@
+
+<--------------Core Java --------------------->
+
+https://www.interviewbit.com/java-interview-questions/
+https://java2blog.com/java-interview-questions-for-2-years-experience/***Done this 
+https://java2blog.com/java-interview-questions-for-5-years-experience/ --------Important 
+https://www.scientecheasy.com/2019/04/method-overriding-interview-programs.html/ --------Important 
+https://java2blog.com/category/interview/interview-questions/
+
+https://www.youtube.com/watch?v=YAOFbdDbjNY   =---> java tricky question  
+
+https://scrutinybykhimaanshu.blogspot.com/2016/04/java-reflection-api-interview-questions.html  
+--> reflection-api-interview-questions
+
+https://www.edureka.co/blog/interview-questions/java-collections-interview-questions/ --Collection
+
+
+
+--collection interview
+https://javahungry.blogspot.com/2019/11/exception-handling-interview-questions-and-answers.html  -->Exception
+https://javarevisited.blogspot.com/2011/11/collection-interview-questions-answers.html#axzz7VKj06Okk
+https://javahungry.blogspot.com/2015/05/50-java-collections-interview-questions-and-answers.html
+
+https://www.youtube.com/watch?v=OGGHFabY9G4 --java hashmap important
+
+
+----------> Design Pattern Interview Questions <-----------
+
+https://javarevisited.blogspot.com/2011/03/10-interview-questions-on-singleton.html
+
+https://javarevisited.blogspot.com/2012/06/20-design-pattern-and-software-design.html
+
+<-------------------Coding programm questions ----------------->
+https://javahungry.blogspot.com/p/interview.html
+https://javahungry.blogspot.com/2018/09/70-top-java-interview-programs-with-coding-solutions.html ----Use first
+https://javahungry.blogspot.com/p/interview.html ----use second
+
+
+
+<----------- Coding interview link  ----------->
+
+1) https://www.youtube.com/watch?v=nOmVRMNnOK4
+2) https://www.youtube.com/watch?v=-rw8iIsAF5I
+3) https://www.youtube.com/watch?v=FB6RsHx7S6A
+4) https://www.youtube.com/watch?v=owtO0cKwtk4 --DSA question
+5) https://www.youtube.com/watch?v=HFQAPW8SMBM&list=PLyHJZXNdCXsfqAkteaQ6JfZ_IHvxX-Hj3&index=1
+6) https://www.youtube.com/watch?v=TU_TEoYCpPs
+7) https://www.youtube.com/watch?v=3vbizK6KzaU&list=PLUDwpEzHYYLtgkXK6YaZ4I2XcsjMqIaEa  ---Normal basic question
+8) https://www.youtube.com/watch?v=M2eSm8WIXAw&list=PLFGoYjJG_fqomLQhosqvZc_5qK1CsBpRJ  -----star patterns
+9) https://www.youtube.com/watch?v=_BXSdPNFnX8&list=PLFGoYjJG_fqpcoeCZsi_czihPa4GoFtrL
+
+<----------- java 8  ----------->
+---------------------------------
+1) https://www.youtube.com/watch?v=oNdMigiwzlU
+2) https://www.youtube.com/watch?v=-ORgK_JkOa4&list=PLFGoYjJG_fqp52WKlmgF4cV72KS9_9tih
+3) https://www.youtube.com/watch?v=3BSrJDI-nLQ&list=PLyHJZXNdCXsdeusn4OM33415DCMQ6sUKy&index=26 ---Remaining.
+4) https://intellipaat.com/blog/interview-question/java-8-interview-questions/
+5) https://www.concretepage.com/java/java-8/
+<----------- Mock interview link  ----------->
+https://www.youtube.com/watch?v=ZzJ3qkPR9WA
+Stream---
+
+https://coderstea.in/post/java/stream-api-in-java-the-hero-without-a-cape/
+wonderfull
+https://www.fullstack.cafe/interview-questions/java
+https://igotanoffer.com/blogs/tech/sorting-interview-questions#easy
+
+
+
+<-------------------Spring Core---------------------------->
+
+https://java2blog.com/spring-interview-questions-and-answers/
+
+
+<-------------------Spring Mvc---------------------------->
+https://www.guru99.com/spring-mvc-framework-interview-questions.html --see last
+https://www.interviewbit.com/spring-interview-questions/
+https://www.softwaretestinghelp.com/spring-mvc-interview-questions/ --start from here
+https://javarevisited.blogspot.com/2018/11/top-20-spring-mvc-interview-questions-answers-for-java-developers.html#axzz7YFG3WxRf
+
+<-------------------Spring Boot---------------------------->
+
+<------------Servlet------------------>
+
+https://www.interviewbit.com/servlet-interview-questions/ --Interview question
+https://www.softwaretestinghelp.com/servlet-interview-questions/
+
+
+<-------------------Microservice--------------------->
+  
+  Interview question --->
+     https://www.youtube.com/watch?v=o36vWQCRrp0
+	 https://www.youtube.com/watch?v=9eqrhe2XMbA
+	 
+  Tutorial --->
+  
+  https://www.youtube.com/watch?v=BnknNTN8icw
+  https://www.youtube.com/watch?v=_PQd6aZ-ANk
+  
+  
+  
+  <----------------------------Hibernate----------------------------------->
+https://java2blog.com/hibernate-interview-questions-and-answers/

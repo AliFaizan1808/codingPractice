@@ -1,0 +1,107 @@
+ ----------------------Difference Between Filter, Listner And Interceptor---------------------------------- 
+
+1) The filter depends on the servlet container. Without the servlet container, the doFilter method cannot be 
+   called back without the servlet container,
+2) interceptor has nothing to do with the servlet.
+3) Filter cannot generate a request or response. It only modifies a request for a certain resource or modifies 
+   a response from a certain resource.
+4) listener is mainly used for monitoring.
+5) Through the listener, a certain execution action in the web server can be monitored,
+6) when application, session, and request are created and died, or added, modified and deleted then specific 
+   listener will get executated.
+7) Interceptor works under the Application context...prehandle, post handle , After completion..
+8) Servlet, filter, and listener are configured in web.xml while Interceptor configured into 
+   dispatcher-servlet.xml
+9) Interceptors only work on action requests, while filters work on almost all requests.
+10)Filter can preprocess the user request before a request reaches the servlet, or it can process the http 
+   response when leaving the servlet:
+    Before executing the servlet, first execute the filter program and do some preprocessing work for it;
+    Modify the request and response according to the needs of the program;
+11) Listeners can be used to listen to various lifecycle events within the Servlet context.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Filter example Filter ::->
+
+public class MyFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialization logic if needed
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        // Pre-processing logic
+        System.out.println("Request is being filtered");
+        
+        // Continue the filter chain
+        chain.doFilter(request, response);
+        
+        // Post-processing logic
+        System.out.println("Response is being filtered");
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup logic if needed
+    }
+}
+
+
+
+@Configuration
+public class FilterConfig {
+
+    @Bean
+    public FilterRegistrationBean<MyFilter> loggingFilter() {
+        FilterRegistrationBean<MyFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new MyFilter());
+        registrationBean.addUrlPatterns("/myEndpoint/*"); // URL patterns to filter
+        registrationBean.setOrder(1); // Set precedence if multiple filters are defined
+        return registrationBean;
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Filter example Listner ::->
+
+
+
+@WebListener
+public class MyListener implements ServletContextListener {
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        // Initialization logic
+        System.out.println("ServletContext initialized");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        // Cleanup logic
+        System.out.println("ServletContext destroyed");
+    }
+}
+
+
+@Configuration
+public class ListenerConfig {
+
+    @Bean
+    public ServletListenerRegistrationBean<MyListener> myListener() {
+        return new ServletListenerRegistrationBean<>(new MyListener());
+    }
+}
+
+
+
+
+https://chatgpt.com/share/8f158340-eb2f-44e5-912b-48756ca82dae
+
+
+
+Interceptor is specifically to spring mvc.
+----------------------------------------------------------------------------------------------------------------------------- 

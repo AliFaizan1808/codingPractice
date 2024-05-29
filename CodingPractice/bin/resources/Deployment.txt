@@ -1,0 +1,176 @@
+
+1) If any machine which can communivate things on server that we can call as server.
+
+2) What is Tomcat , Jboss ?? - 
+open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language, and Java WebSocket technologies. 
+It serves as a web server and Java Servlet container, providing a platform for running Java-based web applications
+
+    Basically above , they provide the implementation where we can run java labguage to communicate with the network.
+
+These servers provide the necessary infrastructure to connect your Java code to the network, allowing it to serve responses to
+incoming HTTP requests. When you develop a web application, your code needs a way to interact with the outside world via the internet. 
+These servers act as intermediaries between your application code and the network, handling tasks such as receiving incoming requests, 
+routing them to the appropriate parts of your code, and sending back responses to the client.
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Virtual Machines (VMs) :->
+
+So what is VM ? So its virtual machine that u cannot touch it.. simple !!!.. But how. and why we need it..
+
+So lets see the example below .
+
+We have two type of VM
+1) Personal VM - technically it has different name
+2) VM provided by cloud platforms.
+
+1) Personal VM :- So think that you have Window operating system in your laptop (100 GB internal + 12 GB RAM). So what if you have requirement of Linux operating system 
+   You Wont buy new laptop for this !! right ..And you wont delete the current OS and install new different OS, that is not feasible and convenient.
+   So we have Hypervisor(Means the application provide this hypervisor).
+   So using Hypervisor we can run Two operating system in one machine. You have to allocate or share/distribute the memory to both the OS. 
+   so there is Host operationg system or primary OS which is in your machine and there is VM with different OS which provides by the hypervisor.
+
+2) VM provided by cloud platforms.:- clod provider provide the VM to us. based on configuration they charge US. 
+  
+   Just in - All VM's are independent of each oteher and they work in isolation.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Containerization :-> (Docker)
+
+Containerization is unlike to virtualization. In containerization multiple process work independently in islotaion with each other. 
+Each process share the same OS and Machine.
+
+
+Dokcer is the tool of Containerization technique.
+
+1) So lets take an example- that your code is working in your machine. and to do so. you have installed many requirement and dependencies.
+   So if u want to run in different machine same dependencies and requirements u have to install. But in many cases we face compatibilty issue. 
+  and that make our life so difficult. 
+
+2) To come over this situation docker comes in picture. 
+3) It is follows the Containerization techniques.
+4) so you Docker tool can help you to package your whole application (Including dependencies etc). and it will create the Image.
+5) Now you can send this image to anyone. 
+6) You have to run this image in Docker engine. it will run properly without worrying of any dependecies.
+7) so Docker as service (image) we can deploy into server.
+8) we have Docker hub . like maven repository where you can store your container (it can be private or public).
+
+
+So right now u dont need to write all docker instructionmanually . there are 3rd party tool is there to create the docker file.
+
+1) Buildpackes.io (Heroku) -- use image tag in pom.xml --- while "mvn spring-boot:build image" itself it will create the docker file.
+2) Google Jib
+
+while running this 3rd party tools make sure u r connectd to Docker engine.
+
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Nginx :->
+
+Its nothing but webserver like , Apache Jboss --> It can provide you the security and load balancing.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Kubernate :->
+Kubernate is help us to manage the all the containers . it gives theinstruction, How to manage. and how to balance the load balancer.
+
+ 
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+
+What is Amazon ECR ?
+
+Amazon ECR (Amazon Elastic Container Registry) is a fully managed container registry service provided by Amazon Web Services (AWS). 
+It allows developers to store, manage, and deploy Docker container images securely.
+
+Key features of Amazon ECR include:
+
+1. **Private Container Registry**: Amazon ECR provides private repositories for storing Docker container images. These repositories are accessible 
+only to authorized AWS users and services, ensuring the security and privacy of your container images.
+
+2. **Integration with Other AWS Services**: Amazon ECR integrates seamlessly with other AWS services, such as Amazon ECS (Elastic Container Service), 
+Amazon EKS (Elastic Kubernetes Service), AWS Fargate, and AWS CodeBuild. This integration simplifies the deployment and management of containerized 
+applications on AWS.
+
+3. **Lifecycle Policies**: Amazon ECR allows you to define lifecycle policies to automate the cleanup of unused or outdated images. You can configure 
+rules to expire or delete images based on criteria such as image age, tag status, or repository size, helping you optimize storage costs and maintain a 
+clean image repository.
+
+4. **Image Scanning**: Amazon ECR offers image scanning capabilities to help identify software vulnerabilities and ensure compliance with security standards. 
+It integrates with AWS Identity and Access Management (IAM) for fine-grained access control and AWS CloudTrail for auditing image access and usage.
+
+5. **Cross-Region Replication**: Amazon ECR supports cross-region replication, allowing you to replicate container images across different AWS regions for 
+improved availability and resilience. This feature enables you to deploy applications in multiple regions while maintaining consistency across environments.
+
+Overall, Amazon ECR provides a reliable and scalable solution for managing container images in cloud-native applications. It simplifies the containerization
+ workflow by offering a secure and efficient way to store, share, and deploy Docker images within the AWS ecosystem.
+
+
+What is the Alternative of Amazon ECR ???
+
+-Docker Hub
+-Google Container Registry (GCR)
+-Azure Container Registry (ACR) 
+
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+
+What war file contains :->
+
+In a typical Spring Boot application, the WAR (Web Application Archive) file generated by Maven contains the compiled application code and resources but 
+does not include the Maven dependencies directly. Instead, the WAR file typically includes a `WEB-INF/lib` directory that contains JAR (Java Archive) files 
+for all the project dependencies.
+
+Here's how it generally works:
+
+1. **Maven Dependencies**:
+   - When you build a Spring Boot application using Maven, Maven resolves the project dependencies declared in the `pom.xml` file.
+   - Maven downloads the required dependencies from repositories (such as Maven Central or custom repositories) and stores them in the local Maven repository 
+(`~/.m2/repository` by default) on your development machine.
+
+2. **Packaging into WAR**:
+   - When you build a Spring Boot application with `mvn package` (or any other packaging goal), Maven creates a WAR file containing your compiled application code, 
+resources (such as HTML, CSS, JavaScript files), and the necessary JAR files for project dependencies.
+   - The `WEB-INF/lib` directory within the WAR file typically contains all the JAR files for the project dependencies.
+
+3. **Deployment**:
+   - When you deploy the WAR file to a servlet container (such as Apache Tomcat or Jetty), the container automatically extracts the contents of the WAR file,
+ including the `WEB-INF/lib` directory.
+   - The servlet container then makes the classes and resources from the WAR file, as well as the JAR files in the `WEB-INF/lib` directory, available to the 
+application at runtime.
+
+So, in summary, the WAR file generated by Maven for a Spring Boot application includes the compiled application code, resources, and the JAR files for all
+ Maven dependencies within the `WEB-INF/lib` directory. This allows the application to be deployed and run in a servlet container.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+
+How the deployement works in Tribyl. 
+
+Step 1 :-> locally build spring boot in your application 
+Step 2 :-> Commit your changes in remote repository (Bitbucket).
+Step 3 :-> Run CI/CD pipeline in jenkins.
+
+CI/CD pipeline in jenkins consistes of the following steps.
+
+1) Run the batchfile. -> Mvn clean install (build all the required projects)
+2) create war file from backend and important files from UI (react).
+3) Connect With ECR where useing the docker file. reate the Docker image. (docker build)
+4) after creating the the Docker image. Force deploy the ECS.
+5) ECS will use the latest Docker image from ECR. and it will run the image.
+6) We are not using Jar and embedded tomcat server, Instead we are using War and external tomcat . --> This is steps we have written in Docker 
+file while creating the Image.
+
+           
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+

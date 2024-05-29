@@ -1,0 +1,136 @@
+
+All functional interface
+1) Reduce method
+2) Stream cant be used again once it has been used.(We can only use one terminal operation per stream.)
+3) method referennce 
+4) Integer sumEven = numbers.stream().reduce(0, (sum, num) -> 
+						{
+							if(num % 2 == 0)
+								sum += num;
+							return sum;
+						});
+		As u know mostly I used two type od reduce one return Optional and other return T as above.
+		In bove whatever implementation we have just add value and the value is 0 over here.
+5) Stream<String> streamEmpty = Stream.empty();
+6) average(), sum(), min(), max(), and count(). 
+6) Lazy Invocation
+7) IntSummaryStatistics statistics = productList.stream()
+  .collect(Collectors.summarizingInt(Product::getPrice));
+  
+  list.stream().collect(Collectors.summarizingInt(x -> x)).getSum();
+  
+  //HashMap's new method.
+8)hashmap.merge(key, value, remappingFunction)) and computeIfAbsent(), putAll()
+
+  Example ->  String returnedValue = countries.merge("Washington", "USA", (oldValue, newValue) -> oldValue + "/" + newValue);
+	
+  ->	int shoePrice = prices.computeIfAbsent("Shoes", (key) -> 280);
+
+9) GroupingBy
+10) Optional is a container object used to contain not-null objects. Optional object is used to represent null with absent value. This class has various utility methods to facilitate code to handle values as 'available' or 'not available' instead of checking null values.
+11) ofNullable() and of.
+12)ifPresent , ifPresentOrElse
+13) orElse, orElseGet, orElseThrow, 
+14) get
+15) .filter(), .map() and .flatmap()
+16) Optional is meant to be used as a return type. Trying to use it as a field type is not recommended.
+17) Additionally, using Optional in a serializable class will result in a NotSerializableException. So basically dont use it 
+
+18) Object that we use in map it should override equals and hashcode method.
+    
+19) GroupingBy :->
+      1) Collect(Collectors.groupingBy(x -> x.getAge));  -> Map<String, List<Person>> map 
+	  2) Collect(Collectors.groupingBy(x -> x.getAge, Collectors.counting()); --> Map<String, Long> map
+	  3) Collect(Collectors.groupingBy(x -> x.getAge, Collectors.toSet()); --> Map<String, Set<Person>> map
+	  4) Collect(Collectors.groupingBy(x -> x.getAge, Collectors.groupingBy(y -> y.getPrice)); --> 
+	                                                                  Map<String, Map<Integer,List<Person>>> mapp
+																	  
+	  5) Collect(Collectors.groupingBy(x -> x.getAge, Collectors.summingInt(x -> x.getAge())); --> Map<String, Integer> ma
+	  6) Map<String, IntSummaryStatistics> reultMap =  listOfPerson.stream().collect(Collectors.groupingBy(Person :: getName, Collectors.summarizingInt(Person :: getAge)));
+	  7)  maxBy(Comparator<? super T> comparator) { and minBy
+	  
+19) Sorting, Asc and descending , customize sorting.
+20) listOfNumber.stream().sorted((x , y) -> -Integer.compare(x, y)).collect(Collectors.toList()));
+21) List<User> sortedList = users.stream().sorted(Comparator.comparingInt(User::getAge)).collect(Collectors.toList());
+22) Arrays.stream(address.split("\\s+")).forEach(x -> map.put(x, x.length()));
+
+
+23) Implement a method to calculate the factorial of a given number using the reduce() method in Java 8. ???????????
+
+24) https://stackoverflow.com/questions/32995559/reverse-a-comparator-in-java-8   
+ 
+25) To find duplicate value only from list -> 
+    System.out.println(listOfNumber.stream().filter(x -> !set.add(x)).collect(Collectors.toSet()));
+  
+26) Collections.frequency(animals, "bat");
+27) Multiple sorting --> Collections.sort(listOfStudents, Comparator.comparing(Student::getAge).thenComparing(Student::getAge));
+
+28) Peek()
+peek method is a non-terminal operation that allows you to perform an action on each element of a stream as it passes through the pipeline. 
+It can be useful for debugging or logging, or for performing some kind of side effect on the stream elements.
+
+-----------
+
+1) summaryStatistics() present in IntStream which returns IntsummaryStatistics
+2) sum, average you can found 1) intStream 2) SummaryStatistics 3) reduce.(sum)
+3) group by present in collectors class
+   
+
+1) IntStream.range(1, 6)
+            .peek(i -> System.out.println("Before map: " + i))
+            .map(i -> i * i)
+            .peek(i -> System.out.println("After map: " + i))
+            .sum();
+    }
+
+2) IntStream.range(1, 6)
+            .peek(i -> {
+                if (i == 3) {
+                    throw new RuntimeException("Invalid value: " + i);
+                }
+            })
+            .map(i -> i * i)
+            .sum();
+    }
+
+------------------------------------------------------------------------------------
+Difference between 
+Collections.reverse(list) it just reverse the order of list - void method
+ Vs   
+Collections.reverseOrder(can take comparator) - return comparator
+                                         
+
+Collections.sort() uses the Arrays.sort() method internally
+
+A] sort a list.
+  Sort -> all wrapper and string.
+   1) sort Integer In Ass order
+        a) Collections.sort(listOfNum);
+	2) In desc order.
+		b) Collections.sort(listOfString, Collections.reverseOrder());
+
+   Sort own customize class 
+    two ways 1) comparator<MyClass> 2) Comparable<MyClass>
+	u can use java 8 or implement above two interfaces.
+	
+	using java-8 u can write like this ::->
+	Comparator<MyClass> comp = (x, y) -> x.getAlphaber().compareTo(y.getAlphaber());
+		Collections.sort(listOfString, comp);
+	
+Note : s1.compareTo(s2) method available in string class to sort the string.
+
+       Collections.sort(list) -> this is for comparable only.
+	   Collections.sort(list, Comparator) -> this is for Comparator only.
+
+------------------------------------------------------------------------------------
+
+Important java-8 progrms
+
+1) Reverse String in java-8 :
+   		String reverseString = Arrays.stream(inputNames.split("")).reduce("", (result, input) ->  input + result);
+		
+2) fild duplicate Values from string 
+       listOfInteger.stream().filter(x -> Collections.frequency(listOfInteger, x) > 1).distinct().forEach(System.out::println);
+	   
+3) Write a program to count the occurrence of a word in a  using Java 8 streams.   
+Map<String, Long> wordCount =  Arrays.stream(stringArray).map(x -> x.toLowerCase()).collect(Collectors.groupingBy(y -> y, Collectors.counting()));

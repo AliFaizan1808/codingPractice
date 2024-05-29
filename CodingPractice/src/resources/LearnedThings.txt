@@ -1,0 +1,54 @@
+--------------------------> Learned Things <---------------------------------
+
+1) To run jar file, command for that java -jar faizan.jar
+
+
+mvnw package
+
+mvnw spring-boot:run
+
+mvn dependency:tree  --To see the dependency
+
+
+
+JpaSpecificationExecutor 
+
+------------------------------------------------------
+2) Git Checkout
+git clone -b  feature/feature-custom-security-SprinBootDemo https://gitlab.com/faizan.ali-coditas/firstspringbootappdemo.git
+
+------------------------------------------------------
+
+3) Command Line Runner is an interface. It is used to execute the code after the 
+   Spring Boot application started.
+   
+	@Bean 
+	CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
+		return x -> { kafkaTemplate.send("FaizanTopic", "helloFaizan"); 
+		}; 
+	}
+	
+------------------------------------------------------
+4) when we build the Application then jar also goes to .m2 folder starts from com
+
+------------------------------------------------------
+5) Schduler
+
+https://springframework.guru/scheduling-in-spring-boot/
+
+------------------------------------------------------
+
+ctr + shift + h  <--- equivalent to---> Super type, parent
+
+ctr + ALt + F7 <--- equivalent to---> ctr+shift+g
+
+ctr + sgift +enter then ctr+1
+
+ALt + insert == getter andd setter
+
+
+
+
+To Do 
+switch project in intellij
+compare with any branch

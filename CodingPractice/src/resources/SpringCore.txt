@@ -1,0 +1,258 @@
+
+/*IOC-> 
+IOC help's to create the bean by <bean> tag 
+ex. <bean id="messageSource" class="ReloadableResourceBundleMessageSource"/>
+DI -> 
+we can defined the dependency of the class in spring core, dependency is nothing but class instance 
+variable.
+we have two ways to define the variable [DI]
+1) constructor arg    2) setter method */
+
+1) constructor arg
+<constructor-arg value="Europe/London"/>
+2) setter method 
+<property name="basename" value="classpath:messages"/>
+/* this above two way will go inside the bean tag.
+Working::->  first it will create bean and then inject the dependencies..
+Note: while creating an object it will use default constructor.
+*/
+Autowiring Concept.->
+/*
+Autowiring concept is an advance concept.
+we were explicitly setting the dependency by using the property tag.
+but by using Autowiring Concept we can remove property tag for an object reference type.
+bcaz we can not use Autowiring concept for literals.
+*/
+ex. 
+<bean id="nameShouldSameAsVariableName" class="whichObjectWeWant"/> //we rae using byName here
+<bean id="messageSource" class="ReloadableResourceBundleMessageSource" autowire="byName">
+
+//we have byNmae,byType,byConstructor  .....we can do according to our need.
+
+:: we can use @autowired annotation before setter method  and we can remove    autowire="byName"
+from bean tag...
+
+By default @autowire check for
+
+if byName and byType will fail then we have one concept of @Qualifier.
+
+we can use @Qualifier to tell the spring which bean we want to inject ex.@Qualifier("pickBin10")
+//we can put @autowire above the refernce data type...it will directly inject dependency of that
+reference type without using setter injection.
+same thing will happen without setter method , we can use @Qualifier also if BYType and ByName 
+will fail.
+
+//setting literal value via Property file.
+1) we can set primitive data type via property tag inside bean tag
+2) but now we can set the value via property file.
+3) insert .properties file in class path
+4) <property name="Name" value="${}"/>
+
+
+.*.*.*.*.*.*.*.*.  NOW lets talk abount @Value and @Qualified *.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+
+
+We can add @Value above setter like this , @Value("Anjuman College")  Or @Value("${}")
+if we add like this then we dont need to use <property/> tag
+// @Value("Test")
+public void printValues(String s, @Value("Data") String v){}
+// s=Test, v=Data
+If we want to create the object of class only and only if we have value for particular 
+literal value.
+then we can provide @Requird above @Value above the setter.
+and if there is no value we have provided for literal via @Value or via property tag then Exception 
+will be thrown.
+-*-**-*--**-**-*----------------------------------------------------------------------------
+
+Some  Important Annotations in Spring Core.
+1)@Component- we can create the bean without using bean tag in xml file..
+we need to use @Component("nameLikeID") above the class.
+Note:-> if u r not providing id and just keep as it is , then id name will be same 
+as like class name called as default bean ID but fist letter would be small.
+
+
+*===*=*=*==*=*=**=*=*=*=*=remove bean.xml and switch configurations into java file*==*=*=*=*=*=*=*
+
+1) remove .xml file 
+2) create one java file and give @configurations above class name.
+3) and if we want to create bean then give @ComponenScan(basePackages="your path") above the same
+class.
+@propertysource = if u are using java based configurations then this Annotation is used to 
+link property file.
+@Primary = if we have multiple implementation and we have to choose from anyone of them  for
+dependency injection
+then we use @Qualifier  but if we predefined any implemnentation class with @Primary then 
+this class will be pick up by spring for DI.
+
+
+*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-Life Cycle Of bean *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*
+*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-
+
+there are two types of application.
+
+1) Standalone application -> we need to create and close the container Manually.
+2)web app application-> we dont need to create manually while deploying the project it gets 
+created.
+here we are talking about spring Core which is more precisely for Standalone application-
+therefore we need to create the container via ApplicationContext
+/*
+1) @PostConstruct -> this annotation is used to run init method
+2) @PreDestroy -> this annotation is used to run destroy method.
+we will write this annotation above the specific method.
+*/
+1) Container will be created via ApplicationContext 
+2) after creating container then configuration file or configuration java file gets loaded.
+3) after reading configurations file bean will be created
+4) all beans will be stored and maintained by the Container.
+5) after creating bean @PostConstructor i.e init method will be called .[we can write initialization 
+related code under this tag]
+6) finally before closing ApplicationContext.close(); @PreDestroy will run
+7) which will run lastly ,
+8) closing and destroying related stuff we can write over there.
+9)At last container will be closed.
+
+we have two alternative for @PostConstruct and @PreDestroy
+1) @PostConstruct = init-method="method name"/> -inside bean tag
+2) @PreDestroy = destroy-method="method-name"/>
+if want to decalre this for all the bean then we can declare this inside beans tag<beans>
+
+------------------------------------------------------------------------------------------------
+---------------------------------END---------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+
+1) XMLBeanFactory  2) ClassPathXmlApplicationContext or WebApplicationContext
+The Spring Framework comes with two IOC containers – BeanFactory and ApplicationContext. The BeanFactory is the
+ most basic version of IOC containers, and the ApplicationContext extends the features of BeanFactory.
+//diference between  beanFactory and Application context..
+/*
+2) One difference between the bean factory and application context is that the former only instantiates bean when
+ you call getBean() method while ApplicationContext instantiates only Singleton bean when the container is started,  It doesn't wait for the getBean to be called. 
+3) BeanFactory doesn't provide support for internationalization i.e. i18n but ApplicationContext provides support 
+for it.
+4) ability to publish events to beans that are registered as listeners. For example, a ContextStartedEvent is
+ published when the context is started and ContextStoppedEvent is published when the context is stopped. Event 
+ handling in the ApplicationContext is provided through the ApplicationEvent class and ApplicationListener 
+ interface.
+5) annotation-based dependency injection, provided by ApplicationContext only
+6) Apart from this, the ApplicationContext supports almost all types of bean scopes, but the BeanFactory only
+ supports two scopes — Singleton and Prototype. Therefore, it's always preferable to use ApplicationContext 
+ when building complex enterprise applications. 
+*/
+
+------------------------------------------------------------------------------------------------
+1) what is bean ?
+In Spring, the objects that form the backbone of your application and that are managed by the Spring 
+IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed 
+by a Spring IoC container.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------->>>>>>>>>>Scope in Spring Framework<<<<<<<<<--------------------------------------------------------
+
+
+Important point -> GLOBAL SESSION has been removed in Spring 5.x
+and instead of that they have included two different scope
+
+a) Application scope  b) WebSocket Scope  
+NOTE ::-> By default the scope of bean is singletone.
+All the scopes are beow
+1) Singletone
+2) Prototype
+below is only applicable for web Application.
+3) Request
+4) Session
+5) Application
+6) WebSocket
+
+1) Singletone scope 
+	A) it means that container will give us only one object [same at each time whenever we use getBeans() or
+	with the help @Autowire]
+	when we load the container beans get created and stored inside the application contaext ...Whenever we 
+	call getBeans() then we can retrieve that same object each time...
+	B) we can declare scope like this @Scope("singleton")  or @Scope(value =ConfigurableBeanFactory.SCOPE_SINGLETON)
+	
+2) Prototype scope 
+	a) it gives different objet at each time..
+	b) important points -> when container gets loaded NO OBJECT WILL GET INITILIZED , 
+	bcz of the scope ...it will initilised when we call get beans method or @Autowire...
+	
+
+
+CASE STUDY A>
+*************
+	1) I have class A with scope of singletone and Class B with scope of Prototype ..
+	2) when class B is dependent(@autowired) in class A ...then how many object of class A will get created 
+	and how many object of class B will get created ,..
+	
+	B getB(){
+	return B
+	}
+
+	so one object of A will get created [bcz it is singletone ]
+	And one object of class B will get created when we call getB() of class A..
+	so to overcome out of this problem we have solution ....
+	we can write class B like this... 
+	@Scope(value = "prototype" , proxyMode = ScopedProxyMode.TARGET_CLASS)
+	Class B{
+	}
+	above scope will create proxy object of class B inside class A while it will get initilized...
+	and whenever we will call getB() of class A then we will get different object each time...
+
+
+********************
+1) CG lib will create the proxy object
+Another way to do that is to create one method in class A
+	@Lookup
+	B getBObject(){
+	return null;
+	}
+	
+	at run time CG library will override this and return the proxy object of B
+	But I think 2nd Approch is better ....bcz might be some of any other class will be using class B ...
+
+
+https://chatgpt.com/share/64380483-1861-4571-9f56-00d067a519e4   ---> Wonderful explaination.
+
+-----------------------------------------------------------------------------------------------------------------------------
+Singletone class + si ngleton scope class both has same functionality...but both have one difference and the
+difference is that Singletone class give the single object throughout the JVM 
+but singletone scope gives single object per container , as we know we can add two container in our class..
+------------------------------------------------------------------------------------------------------------------------------
+
+3) Request scope ..
+	1) it is available only for web development 
+	2) we can define like @Scope("request") above your class.
+	
+	Points need to remember here ->
+	look it means that for each request ...so if u will write just like above then it will give error if *** if 
+	class which scope we have defined that it would be have request scope and that should present
+	like a dependency in any other class with @autowire...
+	bcz at load on start up object will not get created of a class with the scope "request" (/)
+	so to overcome from this problem we can do the same as we did ---
+	
+	@Scope(value = "request" , proxyMode =  ScopeProxyMode.TARGET_CLASS)
+	Class B{
+	}
+	
+another option is ->
+	@RequestScope
+	Class B
+	above annotation will also provide proxy object during load on startup (/)
+	4) Session Scope
+	1) everything is simillar here like request scope.only difference is for each session it will give the object
+
+n 
+
+
+
+========================================================================================================================
+
+Proofs I have performed --->
+
+1) BeanFactory gives object on demands
+2) ApplicationContext gives OBJECT when configuration file gets loaded.
+3) I have checked singleton scope [Bydefault].
+4) on loading of container only singletone scope class object will get created 
+5) CG lib and the crearion of object if my prototype class present as dependecy in singleton class.
+========================================================================================================================

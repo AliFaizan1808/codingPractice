@@ -1,0 +1,568 @@
+https://java2blog.com/oops-interview-questions-answers-java/
+https://java2blog.com/category/interview/interview-questions/
+
+[[************************************************************************************************************]]
+[[************************************************Coding Interview Key Logic**************************]]
+[[***************************************************************************************]]
+
+1) Swaping two number ?
+1st Approach --> using third variable 
+2nd Approach --> without using third variable
+a = a +b; 
+b = a-b;
+a = a-b 
+
+3rd Approach --> 
+
+a = a * b ;
+b = a/b;
+ a = a/b ;
+( if a and b are not zero)
+4th approach -->
+b= a+b-(a=b);  
+this expression always run right to left...
+
+2) Reverse the number ?
+1st Approch formula --> reverse = reverse * 10 + number % 10; number = number /10; 
+2nd Approach --> u can convert into String and then can reverse using for loop after splitting it by ""
+3rd Approach --> u can use StringBuffer or StringBuilder and then use reverse();
+
+3) Reverse the String ?
+	1st Approch formula --> u can use StringBuffer or StringBuilder and then use reverse();
+	2nd Approach -->  reverse using for loop after splitting it by "" (split into string array or char Array)
+	3rd Approach -->  reverse using for loop , we can use string.index in charAt(i)
+	4 th Approach --->%%
+                 char[] ch = name.toCharArray();
+
+		int start = 0; int end = ch.length-1;
+
+		for(start = 0 ; start < end ; start++ , end--) {
+			char temp = ch[start];
+			ch[start] = ch[end];
+			ch[end] = temp;
+		}
+    5th Approach --> recursion
+	
+	public static String recurssionMethod(String name, String reverseString, int length) {
+		String reverseString1 = reverseString;
+		reverseString1 = reverseString1 + name.charAt(length-1);
+		length--;
+
+		if(length == 0) {
+			return reverseString1;
+		}
+		return recurssionMethod(name, reverseString1, length);
+	}
+	
+	we can use another way also for the recursion
+	
+	public static String recurssionMethod(String [] name, int start, int end) {
+		if(start < end) {
+			String tempString = name[start];
+			name[start] = name[end];
+			name[end] = tempString;
+			start++;
+			end --;
+			recurssionMethod(name, start, end);
+		}
+		return String.join("", name);
+	}
+
+4) Palidrom number/String ?
+
+5) how to find the total count of the digits ?
+formula --> while(num !=0){ num = num /10;  count ++; }
+
+6) Count Number of EVEN & ODD Digits in a Number?
+Point --> if u want to iterate a number then ---> while (num != 0){ num = num /10;}
+If u want to get the last digit of a number then u can do ---> int lastNumber = num % 10;
+
+
+7) Count Sum of Digits in a Number
+
+
+8)  Find Largest Of 3 Numbers ?
+     Two ways we have: 
+A)	Ternary B) if else logic
+     
+9) Generate Fibonacci series ---1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144
+
+    public static void findFibnoccieSeries(int maxNumber) {
+		int lastNumber = 1;
+		int nextNumber = 1;
+		int result = 0;
+		System.out.print(lastNumber + "," + nextNumber);
+		while(result < maxNumber) {
+			result = lastNumber + nextNumber;
+			lastNumber = nextNumber;
+			nextNumber = result;
+			System.out.print(","+result);
+		}
+	}
+	
+	
+	or
+	
+	
+	    int start = 1;
+		int result = 0;
+		
+		while(result < 50) {
+			int temp = result;
+			result = start + result;
+			start = temp;
+			System.out.println(result);
+		}
+
+10) Check Given Number is Prime Or Not
+
+11)  Factorial of a Number
+
+     public static void findFactorial(int num) {
+	   int orignalNum = num;
+		while(orignalNum > 1) {
+			orignalNum -- ;
+			num = num * orignalNum;
+		}
+		System.out.println(num);
+	}
+
+12) Find Sum of Elements in Array
+
+13) Print Even & Odd Numbers from an Array
+
+14) How To Check The Equality Of Two Arrays  -->   System.out.println(Arrays.equals(array1, array2));
+
+15)  Find Missing Number in an Array
+
+ Prerequisite :-> 
+Number in array should be in some range.
+Array no need to be sorted.
+
+int[] array = {6,3,4,7};
+
+		int sumOfArray=0;
+		int totalOfrange = 0;
+
+		
+		int minRange = Integer.MAX_VALUE;
+		int MaxRange = Integer.MIN_VALUE;
+
+		for(int i = 0; i < array.length ; i++) {
+			sumOfArray = sumOfArray + array[i];
+			if(array[i] < minRange) {
+				minRange = array[i];
+			}
+			if(array[i] > MaxRange) {
+				MaxRange = array[i];
+			}
+		}
+		System.out.println("sum of array + " + sumOfArray);
+		System.out.println(minRange + "**" + MaxRange);
+
+
+		for(int i = minRange ; i<=MaxRange ; i++) {
+			totalOfrange = totalOfrange + i;
+		}
+
+		System.out.println("Missing number is :: " + (totalOfrange - sumOfArray));
+
+
+
+
+16) How To Find Maximum & Minimum Values in Array
+
+17) How To Find Duplicate Elements in Array
+
+
+	int [] array = {10,11,13,14,10,14,15,17,16,16,10,11,11};
+		for(int i = 0 ; i<array.length ; i++) {
+			boolean rpeatedVal = false;
+			if(array[i] != Integer.MIN_VALUE) {
+				for(int j = i+1 ; j<array.length ; j++) {
+					if(array[i] == array[j]) {
+						array[j] = Integer.MIN_VALUE;
+						rpeatedVal = true;
+					}
+				}
+				if(rpeatedVal) {
+					System.out.println(array[i]);
+				}
+			}
+		}
+
+
+18) Sort Elements in Array Using Built-in Methods
+Arrays.sort(array);
+
+19) How To Remove White Spaces in a String
+
+20) How To Count Occurrences of  Characters in a String
+
+21) How To Count Occurrences of ‘a’  Character in a String
+
+String name = "faizan ali";
+		int totalLengthCount = name.length();
+		String lengthWithoutCharachter = name.replaceAll("f", "");
+		int trimmedCount = lengthWithoutCharachter.length();
+		System.out.println(totalLengthCount - trimmedCount);
+
+22)  How To Count Words in a String
+
+
+           String name = "faizan hussain  ali";
+1)		System.out.println(name.split("\\s+").length);	
+
+
+       StringTokenizer tokens = new StringTokenizer(sentence);
+2)       return tokens.countTokens();
+
+
+//third way
+String name = "faizan hussain  ali";
+		int count = 1;
+		for(int i = 0; i<name.length() ; i++) {
+			if(name.charAt(i) == ' ' && name.charAt(i+1) != ' ') {
+				count ++ ;
+			}
+		}
+		System.out.println(count);
+	}
+
+
+23) How To Reverse Each Word in a String
+
+
+
+
+Important points : -> 
+Ex - > String name = "faizan hussain    ali";
+
+So here we do have more space so we should not use normal split or split by \\s
+
+
+We should always use \\s+ …it will give us the proper output
+
+24) How To Write Data Into Text File
+
+*********************Java -8 programmig questions*********************
+
+25) Print Sum Of All Numbers
+    1) Integer sum = number.stream().reduce((x, y) -> x+y).get();
+	
+	2) int sum2 = number.stream().mapToInt(x -> x).sum();
+	
+	3) int sum2 = number.stream().mapToInt(x -> x).summaryStatistics.getSum();
+	
+26)  Print Average Of All Numbers
+    
+	1) double avg = number.stream().mapToInt(x -> x).average().getAsDouble();
+	
+	2) double avg = number.stream().mapToInt(x -> x).summaryStatistics.getAverage();
+	
+27) find the square of each number in list , filter it that number sqyare should not be greater than 400 
+    and after finding all square then find the average.
+	
+	System.out.println(numList.stream().filter(x -> (x*x) < 400)
+				.mapToInt(x -> x).average().getAsDouble());
+	
+28) Print Even & Odd Numbers using Streams
+
+29) Print Numbers Starts With Prefix 2 using Streams
+     
+	 List<Integer> number1 = number.stream().filter(x -> 
+		                          Integer.toString(x).startsWith("2")).collect(Collectors.toList());
+								  
+
+
+    Important point here :-> 
+     ex-> List<Integer> number = Arrays.asList(1,5,6,2,8,4,5,225,369);
+              number.stream().map(x -> Integer.toString(x));	
+              number.stream().map(Integer::toString); // this will give u the compilation bcz of ambiguity ..
+               // multiple toString method (overriden method) available in String class. 	
+			   
+30) Print Duplicate Numbers using Streams
+    
+	1) List<Integer> number = Arrays.asList(1,5,6,2,8,4,5,2,1,6,225,369);
+		
+		Set<Integer> duplicateValue = new HashSet<Integer>();
+		
+		number.stream().filter(x -> !duplicateValue.add(x)).forEach(System.out :: println);
+		
+	2) Set<Integer> duplicate = number.stream().filter(x -> Collections.frequency(number, x) > 1)
+				.collect(Collectors.toSet());
+
+    3) List<Integer> duplicateIntList2 = intList.stream().distinct()
+		.filter(x -> Collections.frequency(intList, x) > 1).collect(Collectors.toList());
+		
+		
+	4) very important 
+	   find the duplicate using groupingBy method..
+	   
+	   	List<Integer> duplicateList = 
+				list1.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet().stream().filter(x -> x.getValue() > 1)
+				.map(x -> x.getKey()).collect(Collectors.toList());
+
+Note :-> int freq = Collections.frequency(number, 225);  where number is Collection object
+
+
+31) Find Max and Min Numbers using Streams
+
+    many ways we have 
+	
+	1) int min = list.stream().mapToInt( x -> x.getSalary()).summaryStatistics().getMin();
+	2) int min = list.stream().mapToInt(x -> x.getSalary).min().get();
+	3) int min = list.stram().min(comparator).get();
+	
+	same with max also 
+
+32) Sort Numbers (ASC/DESC) using Streams
+     
+	 1) ASC =>
+	   List<Integer> sortedNumber = number.stream().sorted().collect(Collectors.toList());
+	 
+	 
+	 2) DESC =>
+	   List<Integer> sortedNumber = number.stream()
+				.sorted((x, y) -> -x. (y)).collect(Collectors.toList());
+				
+				Note : we need comparator for descending order, we have -x.compareTo(y) and 
+				Collections.reverseOrder() to get the comparator
+				
+				
+33) Get/ignore first 5 numbers using Limit & Skip in Streams
+
+    limit is use to get first value defined in limit function.
+	skip is use to get value after skiping number of value defined in skip function.
+	
+	number.stream().limit(5).collect(Collectors.toList());
+	number.stream().skip(5).collect(Collectors.toList());
+	
+34) Get Second Highest/Lowest Number using Streams
+
+     int secondMin = list.stream().sorted().distinct().skip(1).findFirst().get();
+	 int secondHighest = list.stream.sorted(Collections.reverseOrder).distinct().skip(1).findFirst().get();
+	 
+35) Count number of occurance of words is String . 
+
+
+     1) 1st  way 
+		  list.stream().distinct().forEach(x -> System.out.println(x + " ->"
+		  + Collections.frequency(list, x)));
+		  
+	 2) second way
+	 
+		  list.stream().distinct().forEach(x -> map.put(x, Collections.frequency(list, x)));	  
+		  System.out.println(map);
+		  
+	 3) 3rd way
+		  
+		  Map<String, Integer> m = 
+		   list.stream().distinct()
+		   .collect(Collectors.toMap(Function.identity(), 
+		   y -> Collections.frequency(list, y)));
+		  
+		  //NOTE :: x -> x in function we can replace it by Function.identity()...
+		  
+	 4) 4th ways 
+		  
+		  Map<String, Long> mmm = list.stream()
+				  .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		  
+		  System.out.println(mmm);
+		  
+36) Sort your Employee class in descending order using java-8 (stream)
+      
+	  1) list.sort((x, y) -> -Integer.compare(x.getSalary(), y.getSalary())); 
+	  2) List<Employee> lists = list.stream().sorted((x,y) 
+				-> -Integer.compare(x.getSalary(), y.getSalary())).collect(Collectors.toList());
+				
+				if someone ask top 3 salaries then we can use limit also.
+				
+				
+37) flatMap syntax , why we need flatMap this explaination is in my normal notes.
+
+     List<Employee> list = Arrays.asList
+				(new Employee(25000,"anis", Arrays.asList("reading", "dancing")),
+						new Employee(55000,"faizan",Arrays.asList("reading", "penting")),
+						new Employee(12000,"ejaz", Arrays.asList("outing", "dancing")),
+						new Employee(10000,"Ashraf", Arrays.asList("planting", "dancing")));
+						
+						
+	List<String> list1 = list.stream().flatMap(x -> x.getHobbies().stream()).distinct()
+				              .collect(Collectors.toList());
+							  
+			System.out.println(list1);
+			
+			
+very Important point here ..
+
+ in IntSrtream we do have one method called as summaryStatistic() which return IntSummaryStatistics class
+ in that we do have many utility method like getMin(), getMax(), getAverage(), etc
+ 
+ 38)  convert string into Uppercase and the join with ','( delimilater) using java-8
+    
+	 1)    List<String> upperCaseString =
+    		 list.stream().map(x -> x.getName().toUpperCase()).collect(Collectors.toList());
+			  
+			   System.out.println(String.join(",", upperCaseString));
+			   
+	2) String upperCaseString =
+    		 list.stream().map(x -> x.getName().toUpperCase()).collect(Collectors.joining(","));
+			 
+			 
+39) groupingBy is also very important as per the interview question.
+    it simply act as group by in SQL swerver..
+	
+	so if i have a list and i want to get the MAP based on grouping by where key as your value which u want
+    to group by and value 
+	will be the all value which belongs to that key..
+	
+	exapmle like -->
+	
+	three type of groupingBy methods are overloaded in Collectors class.
+	each example represent as below.
+	
+	
+	Map<Integer, Long> map = 
+	list.stream().collect(Collectors.groupingBy(x -> x.getSalary(), Collectors.counting()));
+	
+	Map<Integer, Set<Employee>> emp1 =
+     list.stream().collect(Collectors.groupingBy(x -> x.getSalary(), Collectors.toSet()));
+	 
+	 
+	Map<Integer, List<Employee>> emp = list.stream().collect(Collectors.groupingBy(x -> x.getSalary()));
+	
+	
+	list.stream().collect(Collectors.groupingBy(x -> x.getSalary(), TreeMap :: new  ,Collectors.toList()));
+	
+	
+	
+ *****************************************Java-8 End**********************************************************
+ ******************************************************************************************************************************
+
+ 40) Print from 1 to 100 without using any numbers in your code
+ 
+     int startingInt = 'A'/'A';
+		String thresholdValue = "..........";
+		
+		for(int i = startingInt ; i <= (thresholdValue.length() * thresholdValue.length()) ; i++) {
+			System.out.println(i);
+		}
+		
+ 41) Print 1 to 100 Without Using for/while/do-while Loop in Code || Using Recursive
+     1) using recursion 
+  
+     	public static void printAllNumber(int i) {
+		if(i <= 100) {
+			System.out.println(i);
+			i++;
+			printAllNumber(i);
+		}
+	}
+	
+	2) using java-8
+	
+	   IntStream.range(1, 101).forEach(System.out::println);
+	
+
+42)Print Hello World without using semi colon (;) in Java
+
+    1) if(System.out.printf("hi") == null) {}
+	2) if(System.out.append("hi") == null) {}
+	
+	
+43) Find The First Non Repeated Character In A String
+    
+	there 4 to 5 approaches -->
+	
+	1) using linkedHashMap
+	2) java-8 ->
+			Set<Entry<Character, Integer>> set = map.entrySet();
+			Character c = set.stream().filter(x -> x.getValue()==1).findFirst().get().getKey();
+			System.out.println(c);
+			
+	3) Using indexOf() and lastIndexOf() --> i liked this very easy
+	
+	      for(int i=0; i< name.length() ; i++) {
+			if(name.indexOf(name.charAt(i)) == name.lastIndexOf(name.charAt(i))) {
+				System.out.println(name.charAt(i));
+				break;
+			}
+		}
+		
+	4) list.stream().filter(x -> Collections.frequency(list, x) == 1).findFirst().get()
+		
+	5) using two loops
+	
+	   String name = "aaffa";
+		for(int i = 0; i < name.length() ; i ++) {
+			int count = 0;
+			for(int j = 0; j < name.length() ; j ++) {
+				if(name.charAt(i) == name.charAt(j)) {
+					count ++;
+					if(count > 1) {
+						break;
+					}
+				}
+			}
+			
+			if(count < 2) {
+				System.out.println(name.charAt(i));
+				break;
+			}
+		}
+	
+	
+	
+	
+	
+44) Intersection Of Two Arrays In Java
+   
+   1) usin java-8
+       System.out.println(numList1.stream().filter(x -> numList.contains(x))
+				.distinct().collect(Collectors.toList()));
+				
+	2) 
+	
+	  public static String getIntersection(int [] firstArray, int [] secondArray) {
+		
+		List<Integer> commonInt = new ArrayList<Integer>(firstArray.length + secondArray.length);
+		
+		for(int i = 0 ; i < firstArray.length ; i ++) {
+			
+			for(int j =0; j<secondArray.length; j++) {
+				
+				if(firstArray[i] == secondArray[j] && !commonInt.contains(firstArray[i])) {
+					commonInt.add(firstArray[i]);
+					break;
+				}
+			}
+		}
+		return Arrays.toString(commonInt.toArray());
+	}
+	
+	
+45)  Find out if String has all Unique Characters
+
+
+	
+	
+	
+	----------------------------------------------------------------------------------------------------------------------------
+	
+	Java-8 highlights -->
+	1) mapToInt
+	2) summaryStatistics
+	3) reduce
+	4) sorting
+	5) Collectors.joining(",")
+	
+	
+	Other common highlights --->
+	1) Collections.frequency(number, x)
+	2) "dd".startsWith("d");
+	3) String.join("'",collection/Array)
+	4) indexOf() and lastIndexOf()
+	5) String s = new String(char[] c); ---it will give character into string

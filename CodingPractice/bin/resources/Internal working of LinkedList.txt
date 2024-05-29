@@ -1,0 +1,126 @@
+LinkedList in Java is a data structure that represents a linear collection of elements where each element is a separate object called a "node." 
+These nodes are connected to each other using two references: one points to the previous node, and the other points to the next node. 
+This structure allows you to efficiently insert and remove elements from the middle of the list.
+
+
+Lnked list it is not saved in contineous memory.
+
+Here's an easy-to-understand explanation of the internal working of a LinkedList with an illustrative diagram:
+
+**LinkedList Structure:**
+
+In a LinkedList, you have nodes like this:
+
+```
+Node 1       Node 2       Node 3
+[Data] <-> [Data] <-> [Data]
+   ↑
+Start of the LinkedList (head)
+```
+
+Each node has two parts:
+- Data: This is where the actual element (or value) you want to store is kept.
+- References: There are two references per node:
+  - One points to the previous node (if it exists).
+  - The other points to the next node (if it exists).
+
+**LinkedList Head:**
+
+The LinkedList has a special reference called the "head," which points to the first node in the list. It's the starting point for traversing the list.
+
+**Illustrative Diagram:**
+
+Let's say you have a LinkedList with three nodes containing the values "A," "B," and "C." The diagram would look like this:
+
+```
+    +---+         +---+         +---+
+    | A | <-----> | B | <-----> | C |
+    +---+         +---+         +---+
+```
+
+- "A" is the first element, and it's connected to "B."
+- "B" is connected to both "A" (as the previous node) and "C" (as the next node).
+- "C" is the last element in the list and is connected to "B."
+
+**Insertion:**
+
+When you want to insert a new element, like "D," between "B" and "C," you create a new node for "D." Then, you adjust the references like this:
+
+```
+    +---+         +---+         +---+         +---+
+    | A | <-----> | B | <-----> | D | <-----> | C |
+    +---+         +---+         +---+         +---+
+```
+
+Now, "D" is connected to "B" as its previous node and "C" as its next node. "B" and "C" also have their references updated to point to "D" appropriately.
+
+**Deletion:**
+
+If you want to remove "D" from the list, you simply update the references like this:
+
+```
+    +---+         +---+         +---+
+    | A | <-----> | B | <-----> | C |
+    +---+         +---+         +---+
+```
+
+Now, "D" is disconnected from the list, and the references of "B" and "C" are adjusted accordingly.
+
+This is the basic idea of how a LinkedList works internally. It's a dynamic data structure that can grow or shrink as elements are inserted or removed.
+ Each element is stored in a node, and these nodes are connected through references, allowing for efficient operations on the list, 
+especially for insertions and removals.
+
+
+Basically it uses the doubly linked list above -
+
+
+brief of singly and doubly linked list -
+
+
+A doubly linked list is a variation of the linked list data structure in which each node has two pointers instead of one. In addition to the next pointer, 
+which points to the next node in the list, a doubly linked list also has a previous pointer, which points to the previous node in the list. 
+This bidirectional linking allows for more versatile operations compared to a singly linked list, where you can only traverse the list in one direction.
+
+Here's a summary of the key differences between a doubly linked list and a singly linked list:
+
+1. **Direction of Traversal:**
+   - Singly Linked List: You can only traverse the list in one direction, typically from the head (the beginning) to the tail (the end).
+   - Doubly Linked List: You can traverse the list in both directions, forwards and backwards, thanks to the previous and next pointers in each node.
+
+2. **Memory Overhead:**
+   - Singly Linked List: Requires less memory per node because it only stores one reference (next).
+   - Doubly Linked List: Requires more memory per node because it stores two references (previous and next).
+
+3. **Insertions and Deletions:**
+   - Singly Linked List: Insertions and deletions at the beginning are efficient, but insertions and deletions in the middle or end require traversing the list 
+to find the appropriate location.
+   - Doubly Linked List: Insertions and deletions at any position (beginning, middle, or end) are more efficient because you can easily traverse in both directions
+ and update the references.
+
+4. **Complexity:**
+   - Singly Linked List: Simpler to implement due to its unidirectional nature.
+   - Doubly Linked List: Slightly more complex to implement due to the bidirectional references but provides additional flexibility.
+
+Here's a simplified diagram to illustrate the difference between a singly linked list and a doubly linked list:
+
+**Singly Linked List:**
+```
+    +---+    +---+    +---+
+    | A | -> | B | -> | C |
+    +---+    +---+    +---+
+```
+
+**Doubly Linked List:**
+```
+    +---+    +---+    +---+
+    | A | <-> | B | <-> | C |
+    +---+    +---+    +---+
+```
+
+In a doubly linked list, each node (e.g., "B" in the diagram) not only points to the next node (e.g., "C") but also points to the previous node (e.g., "A"). 
+This bidirectional linking enables more efficient traversal in both directions and simplifies certain operations like inserting or deleting nodes in the middle 
+of the list.
+
+Doubly linked lists are commonly used in scenarios where you need efficient bidirectional traversal, such as certain types of data structures, algorithms, 
+and applications like text editors with undo/redo functionality. However, they come with the trade-off of increased memory usage due to the additional 
+references in each node.
